@@ -142,13 +142,12 @@ const goDetail = () => {}
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     padding: 0 50px;
 
     .rent-item {
       min-width: 300px;
       height: 400px;
-      margin: 20px;
+      margin: 34px;
       border-radius: 7px;
       position: relative;
       background-color: #fff;

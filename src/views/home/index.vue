@@ -7,20 +7,18 @@
         <div class="intro-title">为您推荐最新的整租房源</div>
       </div>
       <div class="rent-list">
-        <router-link to="/detail">
-          <div class="rent-item">
-            <img src="../../assets/images/rent.png" alt="" />
-            <div class="title">富力湾 3房2厅 4000元/月</div>
-            <div class="address">顺安南路12号</div>
-            <div class="price">
-              <span class="price-number">￥4000</span>
-              /月
-            </div>
-            <div class="collection">收藏</div>
-          </div>
-        </router-link>
-
         <div class="rent-item">
+          <img src="../../assets/images/rent.png" alt="" />
+          <div class="title">富力湾 3房2厅 4000元/月</div>
+          <div class="address">顺安南路12号</div>
+          <div class="price">
+            <span class="price-number">￥4000</span>
+            /月
+          </div>
+          <div class="collection">收藏</div>
+        </div>
+
+        <div class="rent-item" @click="goDetail">
           <img src="../../assets/images/rent.png" alt="" />
           <div class="title">富力湾 3房2厅 4000元/月</div>
           <div class="address">顺安南路12号</div>
@@ -143,7 +141,13 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const goDetail = () => {
+  router.push('/condoDetail')
+}
+</script>
 
 <style lang="scss" scoped>
 .content {
