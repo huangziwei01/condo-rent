@@ -1,13 +1,66 @@
 <template>
   <div class="container">
     <div class="content">
-      <div class="poster"><h1>旅行中，像当地人一样生活</h1></div>
+      <div class="poster">
+        <img src="../../assets/images/bg.png" alt="" />
+        <h1>旅行中，像当地人一样生活</h1>
+      </div>
       <div class="rent-intro">
         <h2>最新整租</h2>
         <div class="intro-title">为您推荐最新的整租房源</div>
       </div>
       <div class="rent-list">
-        <div class="rent-item">
+        <el-row :gutter="50">
+          <el-col v-bind="colLayout">
+            <div class="rent-item">
+              <img src="../../assets/images/rent.png" alt="" />
+              <div class="title">富力湾 3房2厅 4000元/月</div>
+              <div class="address">顺安南路12号</div>
+              <div class="price">
+                <span class="price-number">￥4000</span>
+                /月
+              </div>
+              <div class="collection">收藏</div>
+            </div>
+          </el-col>
+          <el-col v-bind="colLayout">
+            <div class="rent-item">
+              <img src="../../assets/images/rent.png" alt="" />
+              <div class="title">富力湾 3房2厅 4000元/月</div>
+              <div class="address">顺安南路12号</div>
+              <div class="price">
+                <span class="price-number">￥4000</span>
+                /月
+              </div>
+              <div class="collection">收藏</div>
+            </div>
+          </el-col>
+          <el-col v-bind="colLayout">
+            <div class="rent-item">
+              <img src="../../assets/images/rent.png" alt="" />
+              <div class="title">富力湾 3房2厅 4000元/月</div>
+              <div class="address">顺安南路12号</div>
+              <div class="price">
+                <span class="price-number">￥4000</span>
+                /月
+              </div>
+              <div class="collection">收藏</div>
+            </div>
+          </el-col>
+          <el-col v-bind="colLayout">
+            <div class="rent-item">
+              <img src="../../assets/images/rent.png" alt="" />
+              <div class="title">富力湾 3房2厅 4000元/月</div>
+              <div class="address">顺安南路12号</div>
+              <div class="price">
+                <span class="price-number">￥4000</span>
+                /月
+              </div>
+              <div class="collection">收藏</div>
+            </div>
+          </el-col>
+        </el-row>
+        <!-- <div class="rent-item">
           <img src="../../assets/images/rent.png" alt="" />
           <div class="title">富力湾 3房2厅 4000元/月</div>
           <div class="address">顺安南路12号</div>
@@ -17,7 +70,6 @@
           </div>
           <div class="collection">收藏</div>
         </div>
-
         <div class="rent-item" @click="goDetail">
           <img src="../../assets/images/rent.png" alt="" />
           <div class="title">富力湾 3房2厅 4000元/月</div>
@@ -37,45 +89,74 @@
             /月
           </div>
           <div class="collection">收藏</div>
-        </div>
-        <div class="rent-item">
-          <img src="../../assets/images/rent.png" alt="" />
-          <div class="title">富力湾 3房2厅 4000元/月</div>
-          <div class="address">顺安南路12号</div>
-          <div class="price">
-            <span class="price-number">￥4000</span>
-            /月
-          </div>
-          <div class="collection">收藏</div>
-        </div>
-        <div class="rent-item">
-          <img src="../../assets/images/rent.png" alt="" />
-          <div class="title">富力湾 3房2厅 4000元/月</div>
-          <div class="address">顺安南路12号</div>
-          <div class="price">
-            <span class="price-number">￥4000</span>
-            /月
-          </div>
-          <div class="collection">收藏</div>
-        </div>
-        <div class="rent-item">
-          <img src="../../assets/images/rent.png" alt="" />
-          <div class="title">富力湾 3房2厅 4000元/月</div>
-          <div class="address">顺安南路12号</div>
-          <div class="price">
-            <span class="price-number">￥4000</span>
-            /月
-          </div>
-          <div class="collection">收藏</div>
-        </div>
+        </div> -->
       </div>
-      <router-link to="/whole-rent"><div class="detail">查看更多整租房源 -></div></router-link>
       <div class="rent-intro">
         <h2>最新合租</h2>
         <div class="intro-title">为您推荐最新的合租房源</div>
       </div>
       <div class="rent-list">
-        <div class="rent-item">
+        <el-row :gutter="50">
+          <el-col v-bind="colLayout">
+            <div class="rent-item">
+              <img src="../../assets/images/rent.png" alt="" />
+              <div class="title">富力湾 3房2厅 4000元/月</div>
+              <div class="address">顺安南路12号</div>
+              <div class="price">
+                <span class="price-number">￥4000</span>
+                /月
+              </div>
+              <div class="collection">收藏</div>
+            </div>
+          </el-col>
+          <el-col v-bind="colLayout">
+            <div class="rent-item">
+              <img src="../../assets/images/rent.png" alt="" />
+              <div class="title">富力湾 3房2厅 4000元/月</div>
+              <div class="address">顺安南路12号</div>
+              <div class="price">
+                <span class="price-number">￥4000</span>
+                /月
+              </div>
+              <div class="collection">收藏</div>
+            </div>
+          </el-col>
+          <el-col v-bind="colLayout">
+            <div class="rent-item">
+              <img src="../../assets/images/rent.png" alt="" />
+              <div class="title">富力湾 3房2厅 4000元/月</div>
+              <div class="address">顺安南路12号</div>
+              <div class="price">
+                <span class="price-number">￥4000</span>
+                /月
+              </div>
+              <div class="collection">收藏</div>
+            </div>
+          </el-col>
+          <el-col v-bind="colLayout">
+            <div class="rent-item">
+              <img src="../../assets/images/rent.png" alt="" />
+              <div class="title">富力湾 3房2厅 4000元/月</div>
+              <div class="address">顺安南路12号</div>
+              <div class="price">
+                <span class="price-number">￥4000</span>
+                /月
+              </div>
+              <div class="collection">收藏</div>
+            </div>
+          </el-col>
+        </el-row>
+        <!-- <div class="rent-item">
+          <img src="../../assets/images/rent.png" alt="" />
+          <div class="title">富力湾 3房2厅 4000元/月</div>
+          <div class="address">顺安南路12号</div>
+          <div class="price">
+            <span class="price-number">￥4000</span>
+            /月
+          </div>
+          <div class="collection">收藏</div>
+        </div>
+        <div class="rent-item" @click="goDetail">
           <img src="../../assets/images/rent.png" alt="" />
           <div class="title">富力湾 3房2厅 4000元/月</div>
           <div class="address">顺安南路12号</div>
@@ -94,49 +175,9 @@
             /月
           </div>
           <div class="collection">收藏</div>
-        </div>
-        <div class="rent-item">
-          <img src="../../assets/images/rent.png" alt="" />
-          <div class="title">富力湾 3房2厅 4000元/月</div>
-          <div class="address">顺安南路12号</div>
-          <div class="price">
-            <span class="price-number">￥4000</span>
-            /月
-          </div>
-          <div class="collection">收藏</div>
-        </div>
-        <div class="rent-item">
-          <img src="../../assets/images/rent.png" alt="" />
-          <div class="title">富力湾 3房2厅 4000元/月</div>
-          <div class="address">顺安南路12号</div>
-          <div class="price">
-            <span class="price-number">￥4000</span>
-            /月
-          </div>
-          <div class="collection">收藏</div>
-        </div>
-        <div class="rent-item">
-          <img src="../../assets/images/rent.png" alt="" />
-          <div class="title">富力湾 3房2厅 4000元/月</div>
-          <div class="address">顺安南路12号</div>
-          <div class="price">
-            <span class="price-number">￥4000</span>
-            /月
-          </div>
-          <div class="collection">收藏</div>
-        </div>
-        <div class="rent-item">
-          <img src="../../assets/images/rent.png" alt="" />
-          <div class="title">富力湾 3房2厅 4000元/月</div>
-          <div class="address">顺安南路12号</div>
-          <div class="price">
-            <span class="price-number">￥4000</span>
-            /月
-          </div>
-          <div class="collection">收藏</div>
-        </div>
+        </div> -->
       </div>
-      <div class="detail">查看更多合租房源 -></div>
+      <div class="detail">查看更多房源 -></div>
     </div>
   </div>
 </template>
@@ -146,6 +187,13 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const goDetail = () => {
   router.push('/condoDetail')
+}
+const colLayout = {
+  xl: 6, // ≥1920px
+  lg: 8, // ≥1200px
+  md: 12, // ≥992px
+  sm: 24, // ≥768px
+  xs: 24 // <768px
 }
 </script>
 
@@ -157,23 +205,30 @@ const goDetail = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f7f9fd;
   padding-bottom: 100px;
 
   a {
     text-decoration: none;
     color: #000;
   }
+
   .poster {
-    width: 100%;
+    width: 100vw;
     height: 434px;
     margin-top: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: url('../../assets/images/bg.png') no-repeat;
-    background-size: 100%;
     color: #fff;
+    position: relative;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    h1 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 
   .rent-intro {
@@ -186,10 +241,11 @@ const goDetail = () => {
     .intro-title {
       font-size: 14px;
       color: #9fa6c4;
+      margin-top: 15px;
     }
   }
   .rent-list {
-    width: 1200px;
+    // padding: 0 80px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -259,6 +315,7 @@ const goDetail = () => {
     background-color: #4860ff;
     color: #fff;
     font-weight: 700;
+    margin-top: 20px;
   }
 }
 </style>

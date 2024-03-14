@@ -9,12 +9,12 @@
           <router-link to="/">
             <div class="nav-item" :style="{ color: route.name === 'home' ? '#1677ff' : '#000' }">首页</div>
           </router-link>
-          <router-link to="/whole-rent">
-            <div class="nav-item" :style="{ color: route.name === 'whole-rent' ? '#1677ff' : '#000' }">整租</div>
+          <router-link to="/search">
+            <div class="nav-item" :style="{ color: route.name === 'search' ? '#1677ff' : '#000' }">找房</div>
           </router-link>
-          <router-link to="/shared-rent">
+          <!-- <router-link to="/shared-rent">
             <div class="nav-item" :style="{ color: route.name === 'shared-rent' ? '#1677ff' : '#000' }">合租</div>
-          </router-link>
+          </router-link> -->
           <router-link to="/news">
             <div class="nav-item" :style="{ color: route.name === 'news' ? '#1677ff' : '#000' }">新闻资讯</div>
           </router-link>
@@ -34,7 +34,6 @@
 <script setup>
 import { useRoute } from 'vue-router'
 const route = useRoute()
-console.log(route)
 </script>
 
 <style lang="scss" scoped>
@@ -56,12 +55,14 @@ console.log(route)
     color: #000;
   }
   .content {
-    width: 1400px;
-    min-width: 700px;
+    width: 100%;
+    min-width: 1000px;
+    max-width: 2440px;
     height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 100px;
 
     .left {
       display: flex;
@@ -78,6 +79,7 @@ console.log(route)
           font-weight: 700;
           text-decoration: none !important;
           color: #000;
+          flex-shrink: 0;
         }
 
         .nav-item:hover {
@@ -90,10 +92,18 @@ console.log(route)
       display: flex;
       align-items: center;
       .login {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        width: 100px;
+        background-color: #1677ff;
+        border-radius: 4px;
+        color: #fff;
+        font-weight: 700;
         margin-right: 20px;
         font-size: 14px;
         font-weight: 700;
-        color: #1677ff;
       }
 
       .register {

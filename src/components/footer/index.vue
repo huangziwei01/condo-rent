@@ -6,6 +6,8 @@
 
 <style lang="scss" scoped>
 .container {
+  // position: fixed;
+  // bottom: 0;
   padding: 20px 0;
   display: flex;
   justify-content: center;
