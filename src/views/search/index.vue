@@ -1,7 +1,20 @@
 <template>
   <div class="container">
-    <my-form :formItems="formItems" v-model="formData" :labelWidth="'120px'" class="my_form">
-      <template #header>筛选</template>
+    <my-form
+      :formItems="formItems"
+      v-model="formData"
+      :labelWidth="'120px'"
+      class="my_form"
+    >
+      <template #header>
+        <h3 class="form_title">请输入您要筛选的条件</h3>
+      </template>
+      <template #footer>
+        <div class="btns">
+          <el-button type="primary">查询</el-button>
+          <el-button>清空</el-button>
+        </div>
+      </template>
     </my-form>
     <div class="rent-list">
       <el-row :gutter="50">
@@ -62,16 +75,23 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import MyForm from '@/components/form/index.vue'
 import { formItems } from './config.js'
-const formData = {}
+const formData = ref({})
+
+formItems.forEach((item) => {
+  const obj = formData.value
+  obj[item.field] = ''
+  console.log(formData.value)
+})
 
 const colLayout = {
   xl: 6, // ≥1920px
   lg: 8, // ≥1200px
   md: 12, // ≥992px
   sm: 24, // ≥768px
-  xs: 24 // <768px
+  xs: 24, // <768px
 }
 </script>
 
@@ -80,12 +100,21 @@ const colLayout = {
   width: 100%;
   margin-top: 80px;
 
+  .form_title {
+    padding: 10px 0;
+  }
+
   .my_form {
     width: 100%;
     background-color: #fff;
     border-radius: 18px;
     margin-top: 110px;
     padding: 0 40px;
+    .btns {
+      display: flex;
+      padding-bottom: 20px;
+      justify-content: flex-end;
+    }
   }
 
   .title1 {
@@ -100,7 +129,6 @@ const colLayout = {
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-    // justify-content: space-between;
     padding: 0 50px;
 
     .rent-item {

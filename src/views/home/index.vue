@@ -3,7 +3,7 @@
     <div class="content">
       <div class="poster">
         <img src="../../assets/images/bg.png" alt="" />
-        <h1>旅行中，像当地人一样生活</h1>
+        <h1>致力于让您更像当地人一样生活</h1>
       </div>
       <div class="rent-intro">
         <h2>最新整租</h2>
@@ -193,14 +193,12 @@ const colLayout = {
   lg: 8, // ≥1200px
   md: 12, // ≥992px
   sm: 24, // ≥768px
-  xs: 24 // <768px
+  xs: 24, // <768px
 }
 </script>
 
 <style lang="scss" scoped>
 .content {
-  // width: 100%;
-  margin-top: 80px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -214,8 +212,7 @@ const colLayout = {
 
   .poster {
     width: 100vw;
-    height: 434px;
-    margin-top: 80px;
+    height: 534px;
     color: #fff;
     position: relative;
     img {
@@ -245,7 +242,6 @@ const colLayout = {
     }
   }
   .rent-list {
-    // padding: 0 80px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;

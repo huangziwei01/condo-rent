@@ -14,7 +14,9 @@
               :style="itemStyle"
               v-if="!item.isHidden"
             >
-              <template v-if="item.type === 'input' || item.type === 'password'">
+              <template
+                v-if="item.type === 'input' || item.type === 'password'"
+              >
                 <el-input
                   :placeholder="item.placeHolder"
                   :show-password="item.type === 'password'"
@@ -31,8 +33,12 @@
                   :modelValue="modelValue[`${item.field}`]"
                   @update:modelValue="handleValueChange($event, item.field)"
                 >
-                  <el-option v-for="option in item.options" :key="option.value" :value="option.value">
-                    {{ option.label }}
+                  <el-option
+                    v-for="option in item.options"
+                    :key="option.value"
+                    :value="option.value"
+                    :label="option.label"
+                  >
                   </el-option>
                 </el-select>
               </template>
@@ -59,23 +65,23 @@
 const props = defineProps({
   title: {
     type: String,
-    default: ''
+    default: '',
   },
   modelValue: {
     type: Object,
-    default: () => {}
+    default: () => {},
   },
   labelWidth: {
     type: String,
-    default: () => '80px'
+    default: () => '80px',
   },
   formItems: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   itemStyle: {
     type: Object,
-    default: () => ({ padding: '10px 40px' })
+    default: () => ({ padding: '10px 40px' }),
   },
   colLayout: {
     type: Object,
@@ -84,13 +90,14 @@ const props = defineProps({
       lg: 8, // ≥1200px
       md: 12, // ≥992px
       sm: 24, // ≥768px
-      xs: 24 // <768px
-    })
-  }
+      xs: 24, // <768px
+    }),
+  },
 })
 const emit = defineEmits(['update:modelValue'])
 
 const handleValueChange = (val, field) => {
+  console.log(val)
   emit('update:modelValue', { ...props.modelValue, [field]: val })
 }
 </script>

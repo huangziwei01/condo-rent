@@ -7,19 +7,36 @@
         </router-link>
         <div class="nav-list">
           <router-link to="/">
-            <div class="nav-item" :style="{ color: route.name === 'home' ? '#1677ff' : '#000' }">首页</div>
+            <div
+              class="nav-item"
+              :style="{ color: route.name === 'home' ? '#1677ff' : '#000' }"
+            >
+              首页
+            </div>
           </router-link>
           <router-link to="/search">
-            <div class="nav-item" :style="{ color: route.name === 'search' ? '#1677ff' : '#000' }">找房</div>
+            <div
+              class="nav-item"
+              :style="{ color: route.name === 'search' ? '#1677ff' : '#000' }"
+            >
+              找房
+            </div>
           </router-link>
-          <!-- <router-link to="/shared-rent">
-            <div class="nav-item" :style="{ color: route.name === 'shared-rent' ? '#1677ff' : '#000' }">合租</div>
-          </router-link> -->
           <router-link to="/news">
-            <div class="nav-item" :style="{ color: route.name === 'news' ? '#1677ff' : '#000' }">新闻资讯</div>
+            <div
+              class="nav-item"
+              :style="{ color: route.name === 'news' ? '#1677ff' : '#000' }"
+            >
+              新闻资讯
+            </div>
           </router-link>
           <router-link to="/feedback">
-            <div class="nav-item" :style="{ color: route.name === 'feedback' ? '#1677ff' : '#000' }">用户反馈</div>
+            <div
+              class="nav-item"
+              :style="{ color: route.name === 'feedback' ? '#1677ff' : '#000' }"
+            >
+              用户反馈
+            </div>
           </router-link>
         </div>
       </div>

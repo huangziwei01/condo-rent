@@ -6,9 +6,11 @@
 
 <style lang="scss" scoped>
 .container {
-  // position: fixed;
-  // bottom: 0;
-  padding: 20px 0;
+  /* position: fixed;
+  bottom: 0; */
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
