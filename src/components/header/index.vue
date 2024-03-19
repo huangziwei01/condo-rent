@@ -7,29 +7,73 @@
         </router-link>
         <div class="nav-list">
           <router-link to="/">
-            <div class="nav-item" :style="{ color: route.name === 'home' ? '#1677ff' : '#000' }">首页</div>
+            <div
+              class="nav-item"
+              :style="{ color: route.name === 'home' ? '#1677ff' : '#000' }"
+            >
+              首页
+            </div>
           </router-link>
           <router-link to="/search">
-            <div class="nav-item" :style="{ color: route.name === 'search' ? '#1677ff' : '#000' }">找房</div>
+            <div
+              class="nav-item"
+              :style="{ color: route.name === 'search' ? '#1677ff' : '#000' }"
+            >
+              找房
+            </div>
           </router-link>
           <router-link to="/news">
-            <div class="nav-item" :style="{ color: route.name === 'news' ? '#1677ff' : '#000' }">新闻资讯</div>
+            <div
+              class="nav-item"
+              :style="{ color: route.name === 'news' ? '#1677ff' : '#000' }"
+            >
+              新闻资讯
+            </div>
           </router-link>
           <router-link to="/feedback">
-            <div class="nav-item" :style="{ color: route.name === 'feedback' ? '#1677ff' : '#000' }">用户反馈</div>
+            <div
+              class="nav-item"
+              :style="{ color: route.name === 'feedback' ? '#1677ff' : '#000' }"
+            >
+              用户反馈
+            </div>
           </router-link>
         </div>
       </div>
       <div class="right">
-        <div class="login" @click="handleNavLoginBtnClick">登录</div>
-        <div class="register" @click="handleNavRegisterBtnClick">注册</div>
+        <template v-if="!isLogin"
+          ><div class="login" @click="handleNavLoginBtnClick">登录</div>
+          <div class="register" @click="handleNavRegisterBtnClick">注册</div>
+        </template>
+        <template v-else> </template>
       </div>
     </div>
-    <el-dialog v-model="dialogTableVisible" :title="dialogTitle" width="600" center>
-      <my-form :formItems="formItems" v-model="formData" class="my_form" :colLayout="{ span: 23 }"></my-form>
-      <span slot="footer" class="dialog-footer">
-        <div class="login" @click="handleLoginBtnClick">立即登录</div>
-      </span>
+    <el-dialog
+      :close-on-click-modal="false"
+      v-model="dialogTableVisible"
+      :title="dialogTitle"
+      width="600"
+      center
+    >
+      <div v-if="curDialogType === 'login'">
+        <my-form
+          :formItems="loginFormItems"
+          v-model="loginFormData"
+          :colLayout="{ span: 23 }"
+        ></my-form>
+      </div>
+      <div v-else>
+        <my-form
+          :formItems="registerFormItems"
+          v-model="registerFormData"
+          :colLayout="{ span: 23 }"
+        ></my-form>
+      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <div class="login" @click="handleLoginBtnClick">{{ btnText }}</div>
+        </div>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -38,20 +82,23 @@
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import MyForm from '@/components/form/index.vue'
-import { loginFormItems, registerFormItems } from './login.config.js'
+import { loginFormItems, registerFormItems } from './config.js'
+const dialogTableVisible = ref(false)
+const dialogTitle = ref('')
+const route = useRoute()
 
-const curDialogType = ref('login')
+const curDialogType = ref('')
+const btnText = computed(() => {
+  return curDialogType.value === 'login' ? '立即登录' : '立即注册'
+})
+
 const loginFormData = ref({})
 const registerFormData = ref({})
 
-const dialogTableVisible = ref(false)
-const dialogTitle = ref('欢迎登录房屋租赁系统！')
-const route = useRoute()
-
-loginFormItems.forEach((item) => {
-  const obj = loginFormData.value
-  obj[item.field] = ''
-})
+// loginFormItems.forEach((item) => {
+//   const obj = loginFormData.value
+//   obj[item.field] = ''
+// })
 
 registerFormItems.forEach((item) => {
   const obj = registerFormData.value
@@ -59,36 +106,18 @@ registerFormItems.forEach((item) => {
 })
 
 const handleNavLoginBtnClick = () => {
-  dialogTableVisible.value = true
-  dialogTitle.value = '欢迎登录房屋租赁系统！'
   curDialogType.value = 'login'
+  dialogTableVisible.value = true
+  dialogTitle.value = '欢迎登录~'
 }
 
 const handleNavRegisterBtnClick = () => {
-  dialogTableVisible.value = true
-  dialogTitle.value = '欢迎注册房屋租赁系统！'
   curDialogType.value = 'register'
+  dialogTableVisible.value = true
+  dialogTitle.value = '欢迎注册~'
 }
 
-const handleLoginBtnClick = () => {
-  console.log(formData.value)
-}
-
-const formData = computed(() => {
-  if (curDialogType.value === 'login') {
-    return loginFormData
-  } else {
-    return registerFormData
-  }
-})
-
-const formItems = computed(() => {
-  if (curDialogType.value === 'login') {
-    return loginFormItems
-  } else {
-    return registerFormItems
-  }
-})
+const handleLoginBtnClick = () => {}
 </script>
 
 <style lang="scss" scoped>
@@ -194,7 +223,8 @@ const formItems = computed(() => {
   }
 }
 
-::v-deep .el-dialog {
+:deep(.el-dialog) {
+  padding-bottom: 30px;
   .el-dialog__header {
     margin: 0;
     padding: 40px 0;

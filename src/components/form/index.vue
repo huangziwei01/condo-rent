@@ -15,7 +15,9 @@
                 :style="itemStyle"
                 v-if="!item.isHidden"
               >
-                <template v-if="item.type === 'input' || item.type === 'password'">
+                <template
+                  v-if="item.type === 'input' || item.type === 'password'"
+                >
                   <el-input
                     :placeholder="item.placeHolder"
                     :show-password="item.type === 'password'"
@@ -64,23 +66,23 @@
 const props = defineProps({
   title: {
     type: String,
-    default: ''
+    default: '',
   },
   modelValue: {
     type: Object,
-    default: () => {}
+    default: () => {},
   },
   labelWidth: {
     type: String,
-    default: () => '100px'
+    default: () => '100px',
   },
   formItems: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   itemStyle: {
     type: Object,
-    default: () => ({ padding: '10px 40px' })
+    default: () => ({ padding: '10px 40px' }),
   },
   colLayout: {
     type: Object,
@@ -89,9 +91,9 @@ const props = defineProps({
       lg: 8, // ≥1200px
       md: 12, // ≥992px
       sm: 24, // ≥768px
-      xs: 24 // <768px
-    })
-  }
+      xs: 24, // <768px
+    }),
+  },
 })
 const emit = defineEmits(['update:modelValue'])
 
@@ -105,30 +107,46 @@ const handleValueChange = (val, field) => {
   padding: 0 !important;
 }
 
-::v-deep .el-form-item {
+:deep(.el-form-item) {
   display: flex;
   align-items: center;
   .el-input {
-    border: 0;
+    border-radius: 6px;
+    background-color: #f7f9fd;
+
     .el-input__wrapper {
+      height: 42px;
+      background-color: #f7f9fd !important;
+      border-color: transparent; /* 设置获得焦点时边框颜色为透明 */
+      box-shadow: none; /* 去掉默认的蓝色边框 */
+      .el-input__inner {
+        padding: 0 10px;
+        background: #f7f9fd !important;
+      }
+    }
+
+    .is-focus {
+      border-color: transparent; /* 设置获得焦点时边框颜色为透明 */
+      box-shadow: none; /* 去掉默认的蓝色边框 */
+      background-color: #f7f9fd;
+    }
+  }
+
+  .el-select {
+    .el-select__wrapper {
       height: 42px;
       background-color: #f7f9fd;
       border-color: transparent; /* 设置获得焦点时边框颜色为透明 */
       box-shadow: none; /* 去掉默认的蓝色边框 */
     }
-
-    .el-input__inner {
-      padding: 0 10px;
+    .el-select__selection {
+      background-color: #f7f9fd;
     }
-    .is-focus {
+    .is-focused {
       border-color: transparent; /* 设置获得焦点时边框颜色为透明 */
       box-shadow: none; /* 去掉默认的蓝色边框 */
+      background-color: #f7f9fd;
     }
   }
 }
-
-// ::v-deep .el-input__inner:focus {
-//   outline: none; /* 去掉默认的焦点样式 */
-//   box-shadow: none; /* 去掉默认的蓝色边框 */
-// }
 </style>
