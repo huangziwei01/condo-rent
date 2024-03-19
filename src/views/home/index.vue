@@ -10,7 +10,7 @@
         <div class="intro-title">为您推荐最新的整租房源</div>
       </div>
       <div class="rent-list">
-        <el-row :gutter="50">
+        <el-row :gutter="20">
           <el-col v-bind="colLayout">
             <div class="rent-item">
               <img src="../../assets/images/rent.png" alt="" />
@@ -96,7 +96,7 @@
         <div class="intro-title">为您推荐最新的合租房源</div>
       </div>
       <div class="rent-list">
-        <el-row :gutter="50">
+        <el-row :gutter="20">
           <el-col v-bind="colLayout">
             <div class="rent-item">
               <img src="../../assets/images/rent.png" alt="" />
@@ -193,7 +193,7 @@ const colLayout = {
   lg: 8, // ≥1200px
   md: 12, // ≥992px
   sm: 24, // ≥768px
-  xs: 24, // <768px
+  xs: 24 // <768px
 }
 </script>
 
@@ -242,12 +242,14 @@ const colLayout = {
     }
   }
   .rent-list {
+    width: 90%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 
     .rent-item {
-      min-width: 300px;
+      width: 100%;
+      // min-width: 300px;
       height: 400px;
       margin: 20px 0;
       border-radius: 7px;

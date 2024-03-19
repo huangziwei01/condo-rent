@@ -1,14 +1,9 @@
 <template>
   <div class="container">
-    <my-form
-      :formItems="formItems"
-      v-model="formData"
-      :labelWidth="'120px'"
-      class="my_form"
-    >
-      <template #header>
+    <my-form :formItems="formItems" v-model="formData" :labelWidth="'120px'" class="my_form">
+      <!-- <template #header>
         <h3 class="form_title">请输入您要筛选的条件</h3>
-      </template>
+      </template> -->
       <template #footer>
         <div class="btns">
           <el-button type="primary">查询</el-button>
@@ -17,7 +12,7 @@
       </template>
     </my-form>
     <div class="rent-list">
-      <el-row :gutter="50">
+      <el-row :gutter="30">
         <el-col v-bind="colLayout">
           <div class="rent-item">
             <img src="../../assets/images/rent.png" alt="" />
@@ -78,12 +73,11 @@
 import { ref } from 'vue'
 import MyForm from '@/components/form/index.vue'
 import { formItems } from './config.js'
-const formData = ref({})
 
+const formData = ref({})
 formItems.forEach((item) => {
   const obj = formData.value
   obj[item.field] = ''
-  console.log(formData.value)
 })
 
 const colLayout = {
@@ -91,7 +85,7 @@ const colLayout = {
   lg: 8, // ≥1200px
   md: 12, // ≥992px
   sm: 24, // ≥768px
-  xs: 24, // <768px
+  xs: 24 // <768px
 }
 </script>
 
@@ -101,7 +95,8 @@ const colLayout = {
   margin-top: 80px;
 
   .form_title {
-    padding: 10px 0;
+    padding: 30px 0;
+    // color: rgb(22, 119, 255);
   }
 
   .my_form {
@@ -109,7 +104,8 @@ const colLayout = {
     background-color: #fff;
     border-radius: 18px;
     margin-top: 110px;
-    padding: 0 40px;
+    padding: 40px;
+    padding-bottom: 20px;
     .btns {
       display: flex;
       padding-bottom: 20px;
@@ -129,12 +125,11 @@ const colLayout = {
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-    padding: 0 50px;
+    margin-top: 40px;
 
     .rent-item {
-      min-width: 300px;
       height: 400px;
-      margin: 34px;
+      margin-bottom: 34px;
       border-radius: 7px;
       position: relative;
       background-color: #fff;

@@ -5,54 +5,53 @@
     </div>
     <el-form :label-width="labelWidth">
       <el-row>
-        <template v-for="(item, index) in formItems" :key="index">
-          <el-col v-bind="colLayout">
-            <el-form-item
-              :label="item.label"
-              :rules="item.rules"
-              class="form-item"
-              :style="itemStyle"
-              v-if="!item.isHidden"
-            >
-              <template
-                v-if="item.type === 'input' || item.type === 'password'"
+        <el-row :gutter="20">
+          <template v-for="(item, index) in formItems" :key="index">
+            <el-col v-bind="colLayout">
+              <el-form-item
+                class="custom-form-item"
+                :label="item.label"
+                :rules="item.rules"
+                :style="itemStyle"
+                v-if="!item.isHidden"
               >
-                <el-input
-                  :placeholder="item.placeHolder"
-                  :show-password="item.type === 'password'"
-                  v-bind="item.otherOption"
-                  :modelValue="modelValue[`${item.field}`]"
-                  @update:modelValue="handleValueChange($event, item.field)"
-                />
-              </template>
-              <template v-else-if="item.type === 'select'">
-                <el-select
-                  :placeholder="item.placeHolder"
-                  style="width: 100%"
-                  v-bind="item.otherOption"
-                  :modelValue="modelValue[`${item.field}`]"
-                  @update:modelValue="handleValueChange($event, item.field)"
-                >
-                  <el-option
-                    v-for="option in item.options"
-                    :key="option.value"
-                    :value="option.value"
-                    :label="option.label"
+                <template v-if="item.type === 'input' || item.type === 'password'">
+                  <el-input
+                    :placeholder="item.placeHolder"
+                    :show-password="item.type === 'password'"
+                    v-bind="item.otherOption"
+                    :modelValue="modelValue[`${item.field}`]"
+                    @update:modelValue="handleValueChange($event, item.field)"
+                  />
+                </template>
+                <template v-else-if="item.type === 'select'">
+                  <el-select
+                    :placeholder="item.placeHolder"
+                    style="width: 100%"
+                    v-bind="item.otherOption"
+                    :modelValue="modelValue[`${item.field}`]"
+                    @update:modelValue="handleValueChange($event, item.field)"
                   >
-                  </el-option>
-                </el-select>
-              </template>
-              <template v-else-if="item.type === 'datepicker'">
-                <el-date-picker
-                  style="width: 100%"
-                  v-bind="item.otherOption"
-                  :modelValue="modelValue[`${item.field}`]"
-                  @update:modelValue="handleValueChange($event, item.field)"
-                ></el-date-picker>
-              </template>
-            </el-form-item>
-          </el-col>
-        </template>
+                    <el-option
+                      v-for="option in item.options"
+                      :key="option.value"
+                      :value="option.value"
+                      :label="option.label"
+                    ></el-option>
+                  </el-select>
+                </template>
+                <template v-else-if="item.type === 'datepicker'">
+                  <el-date-picker
+                    style="width: 100%"
+                    v-bind="item.otherOption"
+                    :modelValue="modelValue[`${item.field}`]"
+                    @update:modelValue="handleValueChange($event, item.field)"
+                  ></el-date-picker>
+                </template>
+              </el-form-item>
+            </el-col>
+          </template>
+        </el-row>
       </el-row>
     </el-form>
     <div class="footer">
@@ -65,23 +64,23 @@
 const props = defineProps({
   title: {
     type: String,
-    default: '',
+    default: ''
   },
   modelValue: {
     type: Object,
-    default: () => {},
+    default: () => {}
   },
   labelWidth: {
     type: String,
-    default: () => '80px',
+    default: () => '100px'
   },
   formItems: {
     type: Array,
-    default: () => [],
+    default: () => []
   },
   itemStyle: {
     type: Object,
-    default: () => ({ padding: '10px 40px' }),
+    default: () => ({ padding: '10px 40px' })
   },
   colLayout: {
     type: Object,
@@ -90,19 +89,46 @@ const props = defineProps({
       lg: 8, // ≥1200px
       md: 12, // ≥992px
       sm: 24, // ≥768px
-      xs: 24, // <768px
-    }),
-  },
+      xs: 24 // <768px
+    })
+  }
 })
 const emit = defineEmits(['update:modelValue'])
 
 const handleValueChange = (val, field) => {
-  console.log(val)
   emit('update:modelValue', { ...props.modelValue, [field]: val })
 }
 </script>
 
 <style scoped lang="scss">
-.my-form {
+.custom-form-item {
+  padding: 0 !important;
 }
+
+::v-deep .el-form-item {
+  display: flex;
+  align-items: center;
+  .el-input {
+    border: 0;
+    .el-input__wrapper {
+      height: 42px;
+      background-color: #f7f9fd;
+      border-color: transparent; /* 设置获得焦点时边框颜色为透明 */
+      box-shadow: none; /* 去掉默认的蓝色边框 */
+    }
+
+    .el-input__inner {
+      padding: 0 10px;
+    }
+    .is-focus {
+      border-color: transparent; /* 设置获得焦点时边框颜色为透明 */
+      box-shadow: none; /* 去掉默认的蓝色边框 */
+    }
+  }
+}
+
+// ::v-deep .el-input__inner:focus {
+//   outline: none; /* 去掉默认的焦点样式 */
+//   box-shadow: none; /* 去掉默认的蓝色边框 */
+// }
 </style>
