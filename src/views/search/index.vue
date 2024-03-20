@@ -1,5 +1,9 @@
 <template>
   <div class="container">
+    <div class="banner">
+      <h1>睡在山海间，住在人情里</h1>
+      <img src="../../assets/images/search-bg.jpeg" alt="" />
+    </div>
     <my-form :formItems="formItems" v-model="formData" :labelWidth="'120px'" class="my_form">
       <!-- <template #header>
         <h3 class="form_title">请输入您要筛选的条件</h3>
@@ -91,8 +95,30 @@ const colLayout = {
 
 <style lang="scss" scoped>
 .container {
-  width: 100%;
-  margin-top: 80px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 100px;
+
+  .banner {
+    width: 100vw;
+    height: 543px;
+    position: relative;
+    h1 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      z-index: 99;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
 
   .form_title {
     padding: 30px 0;
@@ -103,7 +129,7 @@ const colLayout = {
     width: 100%;
     background-color: #fff;
     border-radius: 18px;
-    margin-top: 110px;
+    margin-top: 30px;
     padding: 40px;
     padding-bottom: 20px;
     .btns {
@@ -122,8 +148,10 @@ const colLayout = {
     padding-top: 40px;
   }
   .rent-list {
+    width: 90%;
     margin: 0 auto;
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     margin-top: 40px;
 

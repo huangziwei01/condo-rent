@@ -2,7 +2,7 @@
   <div class="container">
     <div class="content">
       <div class="poster">
-        <img src="../../assets/images/bg.png" alt="" />
+        <img src="../../assets/images/bg.jpg" alt="" />
         <h1>致力于让您更像当地人一样生活</h1>
       </div>
       <div class="rent-intro">

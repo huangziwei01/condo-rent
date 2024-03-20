@@ -15,9 +15,7 @@
                 :style="itemStyle"
                 v-if="!item.isHidden"
               >
-                <template
-                  v-if="item.type === 'input' || item.type === 'password'"
-                >
+                <template v-if="item.type === 'input' || item.type === 'password'">
                   <el-input
                     :placeholder="item.placeHolder"
                     :show-password="item.type === 'password'"
@@ -50,6 +48,16 @@
                     @update:modelValue="handleValueChange($event, item.field)"
                   ></el-date-picker>
                 </template>
+                <template v-else-if="item.type === 'textarea'">
+                  <el-input
+                    style="width: 100%"
+                    v-bind="item.otherOption"
+                    :modelValue="modelValue[`${item.field}`]"
+                    :rows="item.rows"
+                    type="textarea"
+                    :placeholder="item.placeHolder"
+                  />
+                </template>
               </el-form-item>
             </el-col>
           </template>
@@ -66,23 +74,23 @@
 const props = defineProps({
   title: {
     type: String,
-    default: '',
+    default: ''
   },
   modelValue: {
     type: Object,
-    default: () => {},
+    default: () => {}
   },
   labelWidth: {
     type: String,
-    default: () => '100px',
+    default: () => '100px'
   },
   formItems: {
     type: Array,
-    default: () => [],
+    default: () => []
   },
   itemStyle: {
     type: Object,
-    default: () => ({ padding: '10px 40px' }),
+    default: () => ({ padding: '10px 40px' })
   },
   colLayout: {
     type: Object,
@@ -91,9 +99,9 @@ const props = defineProps({
       lg: 8, // ≥1200px
       md: 12, // ≥992px
       sm: 24, // ≥768px
-      xs: 24, // <768px
-    }),
-  },
+      xs: 24 // <768px
+    })
+  }
 })
 const emit = defineEmits(['update:modelValue'])
 
@@ -148,5 +156,9 @@ const handleValueChange = (val, field) => {
       background-color: #f7f9fd;
     }
   }
+}
+
+:deep(.el-row) {
+  width: 100%;
 }
 </style>

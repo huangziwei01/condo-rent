@@ -7,67 +7,72 @@
         </router-link>
         <div class="nav-list">
           <router-link to="/">
-            <div
-              class="nav-item"
-              :style="{ color: route.name === 'home' ? '#1677ff' : '#000' }"
-            >
-              首页
-            </div>
+            <div class="nav-item" :style="{ color: route.name === 'home' ? '#1677ff' : '#000' }">首页</div>
           </router-link>
           <router-link to="/search">
-            <div
-              class="nav-item"
-              :style="{ color: route.name === 'search' ? '#1677ff' : '#000' }"
-            >
-              找房
-            </div>
+            <div class="nav-item" :style="{ color: route.name === 'search' ? '#1677ff' : '#000' }">找房</div>
           </router-link>
           <router-link to="/news">
-            <div
-              class="nav-item"
-              :style="{ color: route.name === 'news' ? '#1677ff' : '#000' }"
-            >
-              新闻资讯
-            </div>
+            <div class="nav-item" :style="{ color: route.name === 'news' ? '#1677ff' : '#000' }">新闻资讯</div>
           </router-link>
           <router-link to="/feedback">
-            <div
-              class="nav-item"
-              :style="{ color: route.name === 'feedback' ? '#1677ff' : '#000' }"
-            >
-              用户反馈
+            <div class="nav-item" :style="{ color: route.name === 'feedback' ? '#1677ff' : '#000' }">用户反馈</div>
+          </router-link>
+          <router-link to="/condo-cms" v-if="isLogin">
+            <div class="nav-item" :style="{ color: route.name === 'condo-cms' ? '#1677ff' : '#000' }">
+              我的房屋
             </div>
+          </router-link>
+          <router-link to="/orders-cms" v-if="isLogin">
+            <div class="nav-item" :style="{ color: route.name === 'orders-cms' ? '#1677ff' : '#000' }">
+              我的订单
+            </div>
+          </router-link>
+          <router-link to="/news-cms" v-if="isLogin">
+            <div class="nav-item" :style="{ color: route.name === 'news-cms' ? '#1677ff' : '#000' }">新闻管理</div>
+          </router-link>
+          <router-link to="/feedback-cms" v-if="isLogin">
+            <div class="nav-item" :style="{ color: route.name === 'feedback-cms' ? '#1677ff' : '#000' }">
+              反馈列表
+            </div>
+          </router-link>
+          <router-link to="/user-cms" v-if="isLogin">
+            <div class="nav-item" :style="{ color: route.name === 'user-cms' ? '#1677ff' : '#000' }">用户管理</div>
           </router-link>
         </div>
       </div>
       <div class="right">
-        <template v-if="!isLogin"
-          ><div class="login" @click="handleNavLoginBtnClick">登录</div>
+        <template v-if="!isLogin">
+          <div class="login" @click="handleNavLoginBtnClick">登录</div>
           <div class="register" @click="handleNavRegisterBtnClick">注册</div>
         </template>
-        <template v-else> </template>
+        <template v-else>
+          <div class="user_center">
+            <el-dropdown trigger="click">
+              <div>
+                <el-icon><User /></el-icon>
+                管理员
+              </div>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <div>
+                    <el-dropdown-item>收藏列表</el-dropdown-item>
+                    <el-dropdown-item>个人中心</el-dropdown-item>
+                    <el-dropdown-item>退出登录</el-dropdown-item>
+                  </div>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </div>
+        </template>
       </div>
     </div>
-    <el-dialog
-      :close-on-click-modal="false"
-      v-model="dialogTableVisible"
-      :title="dialogTitle"
-      width="600"
-      center
-    >
+    <el-dialog :close-on-click-modal="false" v-model="dialogTableVisible" :title="dialogTitle" width="600" center>
       <div v-if="curDialogType === 'login'">
-        <my-form
-          :formItems="loginFormItems"
-          v-model="loginFormData"
-          :colLayout="{ span: 23 }"
-        ></my-form>
+        <my-form :formItems="loginFormItems" v-model="loginFormData" :colLayout="{ span: 23 }"></my-form>
       </div>
       <div v-else>
-        <my-form
-          :formItems="registerFormItems"
-          v-model="registerFormData"
-          :colLayout="{ span: 23 }"
-        ></my-form>
+        <my-form :formItems="registerFormItems" v-model="registerFormData" :colLayout="{ span: 23 }"></my-form>
       </div>
       <template #footer>
         <div class="dialog-footer">
@@ -86,6 +91,7 @@ import { loginFormItems, registerFormItems } from './config.js'
 const dialogTableVisible = ref(false)
 const dialogTitle = ref('')
 const route = useRoute()
+console.log(route)
 
 const curDialogType = ref('')
 const btnText = computed(() => {
@@ -95,10 +101,12 @@ const btnText = computed(() => {
 const loginFormData = ref({})
 const registerFormData = ref({})
 
-// loginFormItems.forEach((item) => {
-//   const obj = loginFormData.value
-//   obj[item.field] = ''
-// })
+const isLogin = ref(true)
+
+loginFormItems.forEach((item) => {
+  const obj = loginFormData.value
+  obj[item.field] = ''
+})
 
 registerFormItems.forEach((item) => {
   const obj = registerFormData.value
@@ -151,6 +159,9 @@ const handleLoginBtnClick = () => {}
     .left {
       display: flex;
       .home-button {
+        height: 80px;
+        display: flex;
+        align-items: center;
         font-size: 32px;
       }
       .nav-list {
@@ -158,16 +169,18 @@ const handleLoginBtnClick = () => {}
         display: flex;
         align-items: center;
         .nav-item {
-          height: 100%;
-          padding: 0 20px;
+          display: flex;
+          align-items: center;
+          height: 80px;
+          padding: 0 15px;
           font-weight: 700;
           text-decoration: none !important;
           color: #000;
           flex-shrink: 0;
-        }
-
-        .nav-item:hover {
-          color: #1677ff;
+          font-size: 17px;
+          &:hover {
+            color: #1677ff;
+          }
         }
       }
     }

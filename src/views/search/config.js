@@ -1,8 +1,14 @@
 export const formItems = [
   {
-    label: '查找地区：',
-    field: 'area',
-    type: 'input'
+    label: '所属城市：',
+    field: 'city',
+    type: 'select',
+    options: [
+      {
+        label: '北京',
+        value: 1
+      }
+    ]
   },
   {
     label: '最高价格：',

@@ -1,8 +1,10 @@
 <template>
   <div class="container">
+    <div class="banner">
+      <h1>新闻资讯</h1>
+      <img src="../../assets/images/news-bg.jpeg" alt="" />
+    </div>
     <div class="list">
-      <h2>新闻资讯</h2>
-
       <div class="news-item">
         <div class="text">
           <div class="title">
@@ -35,21 +37,44 @@
 
 <style lang="scss" scoped>
 .container {
-  margin-top: 80px;
-  background-color: #f7f9fd;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 100px;
 
+  .banner {
+    width: 100vw;
+    height: 543px;
+    position: relative;
+    h1 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      z-index: 99;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
   .list {
-    width: 1200px;
     margin: 0 auto;
     padding-top: 30px;
 
     .news-item {
-      height: 190px;
+      max-height: 139px;
       padding: 20px;
       margin-top: 30px;
       display: flex;
       background-color: #fff;
       border-radius: 8px;
+      display: flex;
+      border: 3px solid #f1f1f3;
+
       img {
         width: 200px;
         height: 150px;
@@ -57,6 +82,7 @@
       }
       .text {
         flex: 1;
+        overflow: hidden;
         .title {
           margin-bottom: 20px;
         }
@@ -67,7 +93,7 @@
           overflow: hidden;
           text-overflow: ellipsis;
           /* 设置行数，根据需要调整 */
-          -webkit-line-clamp: 6; /* 显示3行，可以根据需要调整行数 */
+          -webkit-line-clamp: 3; /* 显示3行，可以根据需要调整行数 */
         }
       }
     }

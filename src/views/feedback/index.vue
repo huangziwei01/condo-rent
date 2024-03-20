@@ -2,7 +2,7 @@
   <div class="container">
     <div class="banner">
       <h1>用户反馈</h1>
-      <img src="../../assets/images/feedback-bg.jpg" alt="" />
+      <img src="../../assets/images/feedback-bg.avif" alt="" />
     </div>
     <div class="des">欢迎您对平台进行反馈，我们会尽快处理~</div>
     <div class="feedback_area">
@@ -44,7 +44,7 @@ import { ref } from 'vue'
 const feedbackContent = ref('')
 const form = ref({
   name: '',
-  email: '',
+  email: ''
 })
 </script>
 
