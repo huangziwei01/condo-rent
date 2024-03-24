@@ -22,7 +22,6 @@
           </div>
         </div>
       </div>
-      <template #footer>Footer content</template>
     </el-card>
   </div>
 </template>

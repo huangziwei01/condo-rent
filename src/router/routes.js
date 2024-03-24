@@ -21,5 +21,6 @@ export default [
   { path: '/orders-cms', name: 'orders-cms', component: OrdersCms },
   { path: '/news-cms', name: 'news-cms', component: NewsCms },
   { path: '/feedback-cms', name: 'feedback-cms', component: FeedbackCms },
-  { path: '/user-cms', name: 'user-cms', component: UserCms }
+  { path: '/user-cms', name: 'user-cms', component: UserCms },
+  // { path: '/:pathMatch(.*)*', component: NotFound } // 404 路由
 ]

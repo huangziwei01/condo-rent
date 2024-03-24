@@ -14,7 +14,9 @@
               富力湾 3房2厅 4000元/月
               <el-tag type="success" style="margin-left: 10px">已租出</el-tag>
               <el-tag type="success" style="margin-left: 10px">被预订</el-tag>
-              <el-tag type="warning" style="margin-left: 10px">租客申请退租</el-tag>
+              <el-tag type="warning" style="margin-left: 10px"
+                >租客申请退租</el-tag
+              >
               <el-tag type="info" style="margin-left: 10px">未租出</el-tag>
             </div>
             <div class="address">顺安南路12号</div>
@@ -28,7 +30,6 @@
           </div>
         </div>
       </div>
-      <template #footer>Footer content</template>
     </el-card>
   </div>
 </template>

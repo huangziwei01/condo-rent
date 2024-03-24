@@ -15,7 +15,6 @@
           :labelWidth="'140px'"
         ></my-form>
       </div>
-      <template #footer>Footer content</template>
     </el-card>
     <el-card style="width: 100%; margin-top: 30px">
       <template #header>
@@ -69,7 +68,11 @@
         </div>
       </template>
       <div>
-        <my-form :formItems="formItems5" v-model="formData5" :colLayout="{ span: 24 }"></my-form>
+        <my-form
+          :formItems="formItems5"
+          v-model="formData5"
+          :colLayout="{ span: 24 }"
+        ></my-form>
       </div>
     </el-card>
     <el-card style="width: 100%; margin-top: 30px">
@@ -97,7 +100,13 @@
 <script setup>
 import { ref } from 'vue'
 import MyForm from '@/components/form/index.vue'
-import { formItems1, formItems2, formItems3, formItems4, formItems5 } from './config.js'
+import {
+  formItems1,
+  formItems2,
+  formItems3,
+  formItems4,
+  formItems5,
+} from './config.js'
 
 const formData1 = ref({})
 const formData2 = ref({})

@@ -7,37 +7,82 @@
         </router-link>
         <div class="nav-list">
           <router-link to="/">
-            <div class="nav-item" :style="{ color: route.name === 'home' ? '#1677ff' : '#000' }">首页</div>
+            <div
+              class="nav-item"
+              :style="{ color: route.name === 'home' ? '#1677ff' : '#000' }"
+            >
+              首页
+            </div>
           </router-link>
           <router-link to="/search">
-            <div class="nav-item" :style="{ color: route.name === 'search' ? '#1677ff' : '#000' }">找房</div>
+            <div
+              class="nav-item"
+              :style="{ color: route.name === 'search' ? '#1677ff' : '#000' }"
+            >
+              找房
+            </div>
           </router-link>
           <router-link to="/news">
-            <div class="nav-item" :style="{ color: route.name === 'news' ? '#1677ff' : '#000' }">新闻资讯</div>
+            <div
+              class="nav-item"
+              :style="{ color: route.name === 'news' ? '#1677ff' : '#000' }"
+            >
+              新闻资讯
+            </div>
           </router-link>
           <router-link to="/feedback">
-            <div class="nav-item" :style="{ color: route.name === 'feedback' ? '#1677ff' : '#000' }">用户反馈</div>
+            <div
+              class="nav-item"
+              :style="{ color: route.name === 'feedback' ? '#1677ff' : '#000' }"
+            >
+              用户反馈
+            </div>
           </router-link>
           <router-link to="/condo-cms" v-if="isLogin">
-            <div class="nav-item" :style="{ color: route.name === 'condo-cms' ? '#1677ff' : '#000' }">
+            <div
+              class="nav-item"
+              :style="{
+                color: route.name === 'condo-cms' ? '#1677ff' : '#000',
+              }"
+            >
               我的房屋
             </div>
           </router-link>
           <router-link to="/orders-cms" v-if="isLogin">
-            <div class="nav-item" :style="{ color: route.name === 'orders-cms' ? '#1677ff' : '#000' }">
+            <div
+              class="nav-item"
+              :style="{
+                color: route.name === 'orders-cms' ? '#1677ff' : '#000',
+              }"
+            >
               我的订单
             </div>
           </router-link>
           <router-link to="/news-cms" v-if="isLogin">
-            <div class="nav-item" :style="{ color: route.name === 'news-cms' ? '#1677ff' : '#000' }">新闻管理</div>
+            <div
+              class="nav-item"
+              :style="{ color: route.name === 'news-cms' ? '#1677ff' : '#000' }"
+            >
+              新闻管理
+            </div>
           </router-link>
           <router-link to="/feedback-cms" v-if="isLogin">
-            <div class="nav-item" :style="{ color: route.name === 'feedback-cms' ? '#1677ff' : '#000' }">
+            <div
+              class="nav-item"
+              :style="{
+                color: route.name === 'feedback-cms' ? '#1677ff' : '#000',
+              }"
+            >
               反馈列表
             </div>
           </router-link>
           <router-link to="/user-cms" v-if="isLogin">
-            <div class="nav-item" :style="{ color: route.name === 'user-cms' ? '#1677ff' : '#000' }">用户管理</div>
+            <div
+              class="nav-item"
+              :style="{ color: route.name === 'user-cms' ? '#1677ff' : '#000' }"
+            >
+              用户管理
+            </div>
           </router-link>
         </div>
       </div>
@@ -67,16 +112,30 @@
         </template>
       </div>
     </div>
-    <el-dialog :close-on-click-modal="false" v-model="dialogTableVisible" :title="dialogTitle" width="600" center>
+    <el-dialog
+      :close-on-click-modal="false"
+      v-model="dialogTableVisible"
+      :title="dialogTitle"
+      width="600"
+      center
+    >
       <div v-if="curDialogType === 'login'">
-        <my-form :formItems="loginFormItems" v-model="loginFormData" :colLayout="{ span: 23 }"></my-form>
+        <my-form
+          :formItems="loginFormItems"
+          v-model="loginFormData"
+          :colLayout="{ span: 23 }"
+        ></my-form>
       </div>
       <div v-else>
-        <my-form :formItems="registerFormItems" v-model="registerFormData" :colLayout="{ span: 23 }"></my-form>
+        <my-form
+          :formItems="registerFormItems"
+          v-model="registerFormData"
+          :colLayout="{ span: 23 }"
+        ></my-form>
       </div>
       <template #footer>
         <div class="dialog-footer">
-          <div class="login" @click="handleLoginBtnClick">{{ btnText }}</div>
+          <div class="login" @click="handleDialogBtnClick">{{ btnText }}</div>
         </div>
       </template>
     </el-dialog>
@@ -84,10 +143,13 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
 import MyForm from '@/components/form/index.vue'
 import { loginFormItems, registerFormItems } from './config.js'
+import { register } from '@/api/user.js'
+import { ElMessage } from 'element-plus'
+
 const dialogTableVisible = ref(false)
 const dialogTitle = ref('')
 const route = useRoute()
@@ -101,7 +163,7 @@ const btnText = computed(() => {
 const loginFormData = ref({})
 const registerFormData = ref({})
 
-const isLogin = ref(true)
+const isLogin = ref(false)
 
 loginFormItems.forEach((item) => {
   const obj = loginFormData.value
@@ -125,7 +187,25 @@ const handleNavRegisterBtnClick = () => {
   dialogTitle.value = '欢迎注册~'
 }
 
-const handleLoginBtnClick = () => {}
+const handleDialogBtnClick = async () => {
+  if (curDialogType.value === 'login') {
+  } else {
+    const res = await register({ ...registerFormData.value, status: '1' })
+    if (res.code === 1) {
+      ElMessage({
+        message: '您已注册成功，欢迎登录~',
+        type: 'success',
+      })
+      // 跳到登录页面
+      const { userName, password } = registerFormData.value
+      curDialogType.value = 'login'
+      loginFormData.value.userName = userName
+      loginFormData.value.password = password
+    } else {
+      ElMessage.error(res.msg)
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

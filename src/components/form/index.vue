@@ -15,7 +15,9 @@
                 :style="itemStyle"
                 v-if="!item.isHidden"
               >
-                <template v-if="item.type === 'input' || item.type === 'password'">
+                <template
+                  v-if="item.type === 'input' || item.type === 'password'"
+                >
                   <el-input
                     :placeholder="item.placeHolder"
                     :show-password="item.type === 'password'"
@@ -74,23 +76,23 @@
 const props = defineProps({
   title: {
     type: String,
-    default: ''
+    default: '',
   },
   modelValue: {
     type: Object,
-    default: () => {}
+    default: () => {},
   },
   labelWidth: {
     type: String,
-    default: () => '100px'
+    default: () => '100px',
   },
   formItems: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   itemStyle: {
     type: Object,
-    default: () => ({ padding: '10px 40px' })
+    default: () => ({ padding: '10px 40px' }),
   },
   colLayout: {
     type: Object,
@@ -99,9 +101,9 @@ const props = defineProps({
       lg: 8, // ≥1200px
       md: 12, // ≥992px
       sm: 24, // ≥768px
-      xs: 24 // <768px
-    })
-  }
+      xs: 24, // <768px
+    }),
+  },
 })
 const emit = defineEmits(['update:modelValue'])
 
@@ -146,6 +148,9 @@ const handleValueChange = (val, field) => {
       background-color: #f7f9fd;
       border-color: transparent; /* 设置获得焦点时边框颜色为透明 */
       box-shadow: none; /* 去掉默认的蓝色边框 */
+      .el-select__placeholder {
+        padding: 0 10px;
+      }
     }
     .el-select__selection {
       background-color: #f7f9fd;

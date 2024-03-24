@@ -193,7 +193,7 @@ const colLayout = {
   lg: 8, // ≥1200px
   md: 12, // ≥992px
   sm: 24, // ≥768px
-  xs: 24 // <768px
+  xs: 24, // <768px
 }
 </script>
 
@@ -242,7 +242,6 @@ const colLayout = {
     }
   }
   .rent-list {
-    width: 90%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;

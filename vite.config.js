@@ -10,8 +10,18 @@ export default defineConfig({
     alias: [
       {
         find: '@',
-        replacement: resolve(__dirname, './src')
-      }
-    ]
-  }
+        replacement: resolve(__dirname, './src'),
+      },
+    ],
+  },
+  // 设置本地代理解决跨域
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8880', // 目标地址
+        changeOrigin: true, // 允许跨域
+        rewrite: (path) => path.replace(/^\/api/, ''), // 重写请求路径
+      },
+    },
+  },
 })
