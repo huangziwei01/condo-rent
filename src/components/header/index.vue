@@ -96,14 +96,15 @@
             <el-dropdown trigger="click">
               <div>
                 <el-icon><User /></el-icon>
-                管理员
               </div>
               <template #dropdown>
                 <el-dropdown-menu>
                   <div>
                     <el-dropdown-item>收藏列表</el-dropdown-item>
                     <el-dropdown-item>个人中心</el-dropdown-item>
-                    <el-dropdown-item>退出登录</el-dropdown-item>
+                    <el-dropdown-item @click="logout"
+                      >退出登录</el-dropdown-item
+                    >
                   </div>
                 </el-dropdown-menu>
               </template>
@@ -147,7 +148,7 @@ import { computed, ref, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
 import MyForm from '@/components/form/index.vue'
 import { loginFormItems, registerFormItems } from './config.js'
-import { register } from '@/api/user.js'
+import { register, login } from '@/api/user.js'
 import { ElMessage } from 'element-plus'
 
 const dialogTableVisible = ref(false)
@@ -163,7 +164,7 @@ const btnText = computed(() => {
 const loginFormData = ref({})
 const registerFormData = ref({})
 
-const isLogin = ref(false)
+const isLogin = localStorage.getItem('token') ? true : false
 
 loginFormItems.forEach((item) => {
   const obj = loginFormData.value
@@ -189,6 +190,24 @@ const handleNavRegisterBtnClick = () => {
 
 const handleDialogBtnClick = async () => {
   if (curDialogType.value === 'login') {
+    const res = await login({
+      userName: loginFormData.value.userName,
+      password: loginFormData.value.password,
+    })
+    if (res.code === 1) {
+      const { roleId, token, userName, menus } = res.data
+      localStorage.setItem('token', token)
+      localStorage.setItem('userName', userName)
+      localStorage.setItem('menus', JSON.stringify(menus))
+      localStorage.setItem('roleId', roleId)
+      ElMessage({
+        message: `欢迎登录，${userName}`,
+        type: 'success',
+      })
+      dialogTableVisible.value = false
+    } else {
+      ElMessage.error(res.msg)
+    }
   } else {
     const res = await register({ ...registerFormData.value, status: '1' })
     if (res.code === 1) {
@@ -205,6 +224,17 @@ const handleDialogBtnClick = async () => {
       ElMessage.error(res.msg)
     }
   }
+}
+
+const logout = () => {
+  localStorage.clear()
+  ElMessage({
+    message: '您已退出登录~',
+    type: 'success',
+  })
+  setTimeout(() => {
+    location.reload()
+  }, 1000)
 }
 </script>
 
