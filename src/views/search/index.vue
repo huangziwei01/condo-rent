@@ -4,7 +4,12 @@
       <h1>睡在山海间，住在人情里</h1>
       <img src="../../assets/images/search-bg.jpeg" alt="" />
     </div>
-    <my-form :formItems="formItems" v-model="formData" :labelWidth="'120px'" class="my_form">
+    <my-form
+      :formItems="formItems"
+      v-model="formData"
+      :labelWidth="'120px'"
+      class="my_form"
+    >
       <!-- <template #header>
         <h3 class="form_title">请输入您要筛选的条件</h3>
       </template> -->
@@ -19,11 +24,14 @@
       <el-row :gutter="30">
         <el-col v-bind="colLayout">
           <div class="rent-item">
-            <img src="../../assets/images/rent.png" alt="" />
-            <div class="title">富力湾 3房2厅 4000元/月</div>
-            <div class="address">顺安南路12号</div>
+            <img
+              src="https://z1.muscache.cn/pictures/5a06acbe-be45-4424-a574-08989aa1d58d.jpg?im_w=1200"
+              alt=""
+            />
+            <div class="title">高级住宅 济州最佳地段</div>
+            <div class="address">济州，济州特别自治道</div>
             <div class="price">
-              <span class="price-number">￥4000</span>
+              <span class="price-number">￥14000</span>
               /月
             </div>
             <div class="collection">收藏</div>
@@ -31,11 +39,14 @@
         </el-col>
         <el-col v-bind="colLayout">
           <div class="rent-item">
-            <img src="../../assets/images/rent.png" alt="" />
-            <div class="title">富力湾 3房2厅 4000元/月</div>
-            <div class="address">顺安南路12号</div>
+            <img
+              src="https://z1.muscache.cn/pictures/miso/Hosting-884516755093685510/original/2f5042f3-9e55-4082-a238-14614c54a8ff.jpeg?im_w=1200"
+              alt=""
+            />
+            <div class="title">莱东地铁+太平山附近</div>
+            <div class="address">香港岛，中国香港</div>
             <div class="price">
-              <span class="price-number">￥4000</span>
+              <span class="price-number">￥24000</span>
               /月
             </div>
             <div class="collection">收藏</div>
@@ -43,11 +54,14 @@
         </el-col>
         <el-col v-bind="colLayout">
           <div class="rent-item">
-            <img src="../../assets/images/rent.png" alt="" />
-            <div class="title">富力湾 3房2厅 4000元/月</div>
-            <div class="address">顺安南路12号</div>
+            <img
+              src="https://z1.muscache.cn/pictures/miso/Hosting-936612660899155876/original/688dfffe-9c4c-4cf8-b7d2-cdde3fe64dd3.jpeg?im_w=1200"
+              alt=""
+            />
+            <div class="title">深圳市中心的宽敞单间公寓</div>
+            <div class="address">福田 深圳</div>
             <div class="price">
-              <span class="price-number">￥4000</span>
+              <span class="price-number">￥10000</span>
               /月
             </div>
             <div class="collection">收藏</div>
@@ -89,7 +103,7 @@ const colLayout = {
   lg: 8, // ≥1200px
   md: 12, // ≥992px
   sm: 24, // ≥768px
-  xs: 24 // <768px
+  xs: 24, // <768px
 }
 </script>
 

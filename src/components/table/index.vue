@@ -8,17 +8,32 @@
         <slot name="headerHandler"></slot>
       </div>
     </div>
-    <el-table :data="tableData" border @selection-change="handleSelectionChange" v-bind="childrenProps">
+    <el-table
+      :data="tableData"
+      border
+      @selection-change="handleSelectionChange"
+      v-bind="childrenProps"
+    >
       <el-table-column
-        v-if="showIndexColumn"
+        v-if="false"
         type="index"
         label="index"
         align="center"
         width="80"
       ></el-table-column>
-      <el-table-column v-if="showSelectColumn" type="selection" align="center" width="80"></el-table-column>
+      <el-table-column
+        v-if="showSelectColumn"
+        type="selection"
+        align="center"
+        width="80"
+      ></el-table-column>
       <template v-for="propItem in propList" :key="propItem.prop">
-        <el-table-column v-bind="propItem" align="center" :label="propItem.label" show-overflow-tooltip>
+        <el-table-column
+          v-bind="propItem"
+          align="center"
+          :label="propItem.label"
+          show-overflow-tooltip
+        >
           <template #default="scoped">
             <slot :name="propItem.slotName" :row="scoped.row">
               {{ scoped.row[propItem.prop] }}
@@ -37,32 +52,32 @@
 const props = defineProps({
   title: {
     type: String,
-    default: ''
+    default: '',
   },
   tableData: {
     type: Array,
-    default: () => {}
+    default: () => {},
   },
   propList: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   showIndexColumn: {
     type: Boolean,
-    default: false
+    default: false,
   },
   showSelectColumn: {
     type: Boolean,
-    default: true
+    default: false,
   },
   childrenProps: {
     type: Object,
-    default: () => {}
+    default: () => {},
   },
   showFooter: {
     type: Boolean,
-    default: true
-  }
+    default: true,
+  },
 })
 
 const emit = defineEmits(['selection-change'])

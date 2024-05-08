@@ -1,64 +1,95 @@
 <template>
   <div class="container">
     <div class="des">
-      <div class="price">￥3000/月</div>
-      <div class="title">富力湾 3房2厅 豪华装修</div>
+      <div class="price">￥{{ detail.price }}/月</div>
+      <div class="title">{{ detail.title }}</div>
       <div class="address">
         <el-icon><Position /></el-icon>
-        顺安南路12号
+        {{ detail.address }}
       </div>
     </div>
     <div class="imgs">
       <el-carousel height="450px">
-        <el-carousel-item v-for="item in 4" :key="item">
-          <h3 class="small justify-center" text="2xl">{{ item }}</h3>
+        <el-carousel-item v-for="(item, index) in imgs" :key="index">
+          <img :src="item.src" alt="" class="image" />
         </el-carousel-item>
       </el-carousel>
     </div>
     <div class="info">
-      <el-descriptions title="详细信息" direction="vertical" :column="4" size="large" border>
-        <el-descriptions-item label="状态">未租出</el-descriptions-item>
-        <el-descriptions-item label="类型">整租</el-descriptions-item>
-        <el-descriptions-item label="租金">3000</el-descriptions-item>
-        <el-descriptions-item label="房产证编号">SDADA2131</el-descriptions-item>
-        <el-descriptions-item label="卧室数量">4</el-descriptions-item>
-        <el-descriptions-item label="卫生间数量">4</el-descriptions-item>
-        <el-descriptions-item label="厨房数量">1</el-descriptions-item>
-        <el-descriptions-item label="房屋面积">2</el-descriptions-item>
-        <el-descriptions-item label="是否有空调">1</el-descriptions-item>
-        <el-descriptions-item label="建成年份">1</el-descriptions-item>
-        <el-descriptions-item label="朝向">1</el-descriptions-item>
-        <el-descriptions-item label="楼层">1</el-descriptions-item>
-        <el-descriptions-item label="是否有电梯">1</el-descriptions-item>
-        <el-descriptions-item label="联系人姓名">1</el-descriptions-item>
-        <el-descriptions-item label="联系人电话">1</el-descriptions-item>
-        <el-descriptions-item label="地址">
-          No.1188, Wuzhong Avenue, Wuzhong District, Suzhou, Jiangsu Province
+      <el-descriptions
+        title="详细信息"
+        direction="vertical"
+        :column="4"
+        size="large"
+        border
+      >
+        <el-descriptions-item label="状态">{{
+          status(detail.rentStatus)
+        }}</el-descriptions-item>
+        <el-descriptions-item label="类型">{{
+          detail.rentType
+        }}</el-descriptions-item>
+        <el-descriptions-item label="详细地址">
+          {{ detail.addressDetail }}
         </el-descriptions-item>
+        <el-descriptions-item label="租金">{{
+          detail.price
+        }}</el-descriptions-item>
+        <el-descriptions-item label="房产证编号">{{
+          detail.deedNum
+        }}</el-descriptions-item>
+        <el-descriptions-item label="卧室数量">{{
+          detail.bedRoomNum
+        }}</el-descriptions-item>
+        <el-descriptions-item label="卫生间数量">{{
+          detail.toiletNum
+        }}</el-descriptions-item>
+        <el-descriptions-item label="厨房数量">{{
+          detail.kitchenNum
+        }}</el-descriptions-item>
+        <el-descriptions-item label="房屋面积">{{
+          detail.area
+        }}</el-descriptions-item>
+        <el-descriptions-item label="是否有空调">{{
+          detail.isAc
+        }}</el-descriptions-item>
+        <el-descriptions-item label="建成年份">{{
+          detail.jzYear
+        }}</el-descriptions-item>
+        <el-descriptions-item label="朝向">{{
+          detail.towards
+        }}</el-descriptions-item>
+        <el-descriptions-item label="楼层">{{
+          detail.floor
+        }}</el-descriptions-item>
+        <el-descriptions-item label="是否有电梯">{{
+          detail.isLift
+        }}</el-descriptions-item>
+        <el-descriptions-item label="联系人姓名">{{
+          detail.contactName
+        }}</el-descriptions-item>
+        <el-descriptions-item label="联系人电话">{{
+          detail.contactPhone
+        }}</el-descriptions-item>
       </el-descriptions>
       <div class="detail">
         <el-collapse v-model="activeCollapse">
           <el-collapse-item title="详细描述" name="1">
             <div>
-              Consistent with real life: in line with the process and logic of real life, and comply with languages
-              and habits that the users are used to;
-            </div>
-            <div>
-              Consistent within interface: all elements should be consistent, such as: design style, icons and
-              texts, position of elements, etc.
+              {{ detail.description }}
             </div>
           </el-collapse-item>
         </el-collapse>
       </div>
     </div>
     <div class="tips">
-      <el-alert
+      <!-- <el-alert
         title="温馨提示："
         type="success"
         show-icon
         :closable="false"
         description="预定前请填写预计入住日期"
-      />
+      /> -->
       <el-alert
         title="联系房东："
         type="info"
@@ -68,8 +99,13 @@
       />
     </div>
     <div class="operate">
-      <h5>预计入住日期:</h5>
-      <el-date-picker v-model="bookDate" type="date" placeholder="Pick a day" size="large" />
+      <!-- <h5>预计入住日期:</h5>
+      <el-date-picker
+        v-model="bookDate"
+        type="date"
+        placeholder="选择入住日期"
+        size="large"
+      /> -->
       <div class="btns">
         <div class="book">立即预订</div>
         <div class="collect">
@@ -82,9 +118,35 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { getCondo } from '@/api/condo'
+const statusMap = {
+  1: '未租出',
+  2: '被预定',
+  3: '已租出',
+}
+
+const status = computed(() => {
+  return function (rentStatus) {
+    return statusMap[rentStatus]
+  }
+})
 const activeCollapse = ref(['1'])
-const bookDate = ref(null)
+const detail = ref({})
+const getDetail = async () => {
+  const res = await getCondo(1)
+  detail.value = res.data
+}
+getDetail()
+
+const imgs = [
+  {
+    src: 'https://z1.muscache.cn/pictures/b4b9c4e1-c4b9-4e77-b2f4-6f6f6e28b0eb.jpg?im_w=1200',
+  },
+  {
+    src: 'https://z1.muscache.cn/pictures/b4b9c4e1-c4b9-4e77-b2f4-6f6f6e28b0eb.jpg?im_w=1200',
+  },
+]
 </script>
 
 <style lang="scss" scoped>
@@ -115,6 +177,11 @@ const bookDate = ref(null)
   }
   .imgs {
     margin-top: 30px;
+    .image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
   .info {
     margin-top: 50px;

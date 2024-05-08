@@ -7,30 +7,96 @@
         </div>
       </template>
       <div class="list">
-        <div class="feedback-item">
+        <div class="feedback-item" v-for="item in feedbackList">
           <div class="content">
-            <div class="desc">
-              据媒体报道，1月29日，支付宝“集五福”正式开启，首日有近40万人集齐。据了解，“集五福”活动始于2016年，至今已持续9年。
-              企查查APP显示，已有多个公司或自然人申请注册“敬业福”“富强福”“爱国福”“和谐福”“友善福”商标，国际分类包括广告销售、办公用品、日化用品等，其中部分商标已成功注册。值得一提的是，最难收集的“敬业福”已被多方注册为商标，国际分类包括方便食品、教育娱乐等，申请人包括科技、电商、农业等公司以及多名自然人。据媒体报道，1月29日，支付宝“集五福”正式开启，首日有近40万人集齐。据了解，“集五福”活动始于2016年，至今已持续9年。
-              企查查APP显示，已有多个公司或自然人申请注册
-            </div>
+            <div class="desc">{{ item.content }}</div>
             <div class="author">
               <el-icon><User /></el-icon>
-              用户1
+              {{ item.userName }}
             </div>
-            <div class="date">2012-12-9</div>
+            <div class="date">{{ item.fTime }}</div>
+            <div class="reply" v-if="item.reply">
+              官方回复:<span style="color: #67c23a">{{ item.reply }}</span>
+            </div>
           </div>
           <div class="btns">
-            <el-button type="success" plain>回 复</el-button>
-            <el-button type="danger" plain>删 除</el-button>
+            <el-button type="success" plain @click="handleReply(item)"
+              >回 复</el-button
+            >
+            <el-button type="danger" plain @click="handleDelete(item)"
+              >删 除</el-button
+            >
           </div>
         </div>
       </div>
     </el-card>
+    <el-dialog
+      :close-on-click-modal="false"
+      v-model="dialogVisible"
+      :title="dialogTitle"
+      width="600"
+      center
+    >
+      <div>
+        <el-form :model="curFormData" label-width="auto">
+          <el-form-item label="回复内容:">
+            <el-input v-model="curFormData.reply" type="textarea" :rows="6" />
+          </el-form-item>
+        </el-form>
+      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="handleDialogBtnClick" primary>回复</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+import { getFeedbackList, deleteFeedback, updateFeedback } from '@/api/feedback'
+import { getUser } from '@/api/user'
+
+const dialogVisible = ref(false)
+const dialogTitle = ref('')
+const curFormData = ref({
+  id: '',
+  reply: '',
+})
+const handleDialogBtnClick = async () => {
+  const res = await updateFeedback(curFormData.value.id, {
+    reply: curFormData.value.reply,
+  })
+  if (res.code === 1) {
+    dialogVisible.value = false
+    getList()
+  }
+}
+const feedbackList = ref([])
+const getList = async () => {
+  const res = await getFeedbackList()
+  if (res.code === 1) {
+    feedbackList.value = res.data.list
+    feedbackList.value.forEach(async (item) => {
+      const { userId } = item
+      const res = await getUser(userId)
+      item.userName = res.data.userName
+    })
+  }
+}
+getList()
+const handleReply = async (item) => {
+  curFormData.value.id = item.id
+  dialogVisible.value = true
+}
+const handleDelete = async (item) => {
+  const res = await deleteFeedback(item.id)
+  if (res.code === 1) {
+    getList()
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 .container {
@@ -72,7 +138,7 @@
           margin-top: 8px;
         }
         .date {
-          margin-top: 8px;
+          margin: 8px 0;
         }
       }
       .btns {

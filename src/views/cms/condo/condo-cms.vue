@@ -11,21 +11,87 @@
         <div class="rent-item">
           <div class="left">
             <div class="title">
-              富力湾 3房2厅 4000元/月
+              莱东地铁+太平山附近
               <el-tag type="success" style="margin-left: 10px">已租出</el-tag>
+              <!-- <el-tag type="success" style="margin-left: 10px">被预订</el-tag> -->
+              <!-- <el-tag type="warning" style="margin-left: 10px"
+                >租客申请退租</el-tag
+              >
+              <el-tag type="info" style="margin-left: 10px">未租出</el-tag> -->
+            </div>
+            <div class="address">香港岛，中国香港</div>
+          </div>
+          <div class="right">
+            <!-- <el-button type="success" plain>确认租出</el-button> -->
+            <el-button type="primary" plain>查看详情</el-button>
+            <!-- <el-button type="primary" plain>修改详情</el-button>
+            <el-button type="warning" plain>同意退租</el-button>
+            <el-button type="danger" plain>删除房子</el-button> -->
+          </div>
+        </div>
+        <div class="rent-item">
+          <div class="left">
+            <div class="title">
+              高级住宅 济州最佳地段
+              <!-- <el-tag type="success" style="margin-left: 10px">已租出</el-tag> -->
               <el-tag type="success" style="margin-left: 10px">被预订</el-tag>
+              <!-- <el-tag type="warning" style="margin-left: 10px"
+                >租客申请退租</el-tag
+              >
+              <el-tag type="info" style="margin-left: 10px">未租出</el-tag> -->
+            </div>
+            <div class="address">济州，济州特别自治道</div>
+          </div>
+          <div class="right">
+            <el-button type="primary" plain>查看详情</el-button>
+            <el-button type="success" plain>确认租出</el-button>
+            <!-- <el-button type="primary" plain>修改详情</el-button>
+            <el-button type="warning" plain>同意退租</el-button>
+            <el-button type="danger" plain>删除房子</el-button> -->
+          </div>
+        </div>
+        <div class="rent-item">
+          <div class="left">
+            <div class="title">
+              富力湾 3房2厅
+              <!-- <el-tag type="success" style="margin-left: 10px">已租出</el-tag> -->
+              <!-- <el-tag type="success" style="margin-left: 10px">被预订</el-tag> -->
               <el-tag type="warning" style="margin-left: 10px"
                 >租客申请退租</el-tag
               >
-              <el-tag type="info" style="margin-left: 10px">未租出</el-tag>
+              <!-- <el-tag type="info" style="margin-left: 10px">未租出</el-tag> -->
             </div>
             <div class="address">顺安南路12号</div>
           </div>
           <div class="right">
-            <el-button type="success" plain>确认租出</el-button>
+            <!-- <el-button type="success" plain>确认租出</el-button> -->
+            <el-button type="primary" plain>查看详情</el-button>
+            <!-- <el-button type="primary" plain>修改详情</el-button>
+            <el-button type="warning" plain>同意退租</el-button>
+            <el-button type="danger" plain>删除房子</el-button> -->
+            <el-button type="warning" plain>同意退租</el-button>
+          </div>
+        </div>
+        <div class="rent-item">
+          <div class="left">
+            <div class="title">
+              深圳市中心的宽敞单间公寓
+              <!-- <el-tag type="success" style="margin-left: 10px">已租出</el-tag> -->
+              <!-- <el-tag type="success" style="margin-left: 10px">被预订</el-tag> -->
+              <el-tag type="warning" style="margin-left: 10px"
+                >租客申请退租</el-tag
+              >
+              <!-- <el-tag type="info" style="margin-left: 10px">未租出</el-tag> -->
+            </div>
+            <div class="address">福田 深圳</div>
+          </div>
+          <div class="right">
+            <!-- <el-button type="success" plain>确认租出</el-button> -->
             <el-button type="primary" plain>查看详情</el-button>
             <el-button type="primary" plain>修改详情</el-button>
+            <!-- <el-button type="primary" plain>修改详情</el-button>
             <el-button type="warning" plain>同意退租</el-button>
+            <el-button type="danger" plain>删除房子</el-button> -->
             <el-button type="danger" plain>删除房子</el-button>
           </div>
         </div>

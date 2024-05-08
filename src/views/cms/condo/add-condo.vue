@@ -83,11 +83,15 @@
       </template>
       <div>
         <el-upload
+          name="photos"
+          multiple
           v-model:file-list="imgList"
-          action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+          :action="uploadUrl"
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
+          :on-success="handleSuccess"
+          :limit="8"
         >
           <el-icon><Plus /></el-icon>
         </el-upload>
@@ -98,7 +102,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import MyForm from '@/components/form/index.vue'
 import {
   formItems1,
@@ -107,6 +111,18 @@ import {
   formItems4,
   formItems5,
 } from './config.js'
+
+const uploadUrl = computed(() => {
+  return import.meta.env.MODE === 'development'
+    ? 'http://localhost:8880/upload/condo_photo'
+    : ''
+})
+
+const handleSuccess = (response, file, fileList) => {
+  console.log(response, file, fileList)
+}
+
+console.log(uploadUrl)
 
 const formData1 = ref({})
 const formData2 = ref({})

@@ -19,6 +19,7 @@
                   v-if="item.type === 'input' || item.type === 'password'"
                 >
                   <el-input
+                    :disabled="item.disabled"
                     :placeholder="item.placeHolder"
                     :show-password="item.type === 'password'"
                     v-bind="item.otherOption"
@@ -58,7 +59,30 @@
                     :rows="item.rows"
                     type="textarea"
                     :placeholder="item.placeHolder"
+                    @update:modelValue="handleValueChange($event, item.field)"
                   />
+                </template>
+                <template v-else-if="item.type === 'cascader'">
+                  <el-cascader
+                    style="width: 100%"
+                    v-bind="item.otherOption"
+                    :modelValue="modelValue[`${item.field}`]"
+                    :placeholder="item.placeHolder"
+                    :options="item.options"
+                    @update:modelValue="handleValueChange($event, item.field)"
+                  />
+                </template>
+                <template v-else-if="item.type === 'checkbox'">
+                  <el-checkbox-group
+                    :modelValue="modelValue[`${item.field}`]"
+                    @update:modelValue="handleValueChange($event, item.field)"
+                  >
+                    <el-checkbox
+                      v-for="(item, index) in item.options"
+                      :label="item.label"
+                      :value="item.value"
+                    />
+                  </el-checkbox-group>
                 </template>
               </el-form-item>
             </el-col>
@@ -108,6 +132,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const handleValueChange = (val, field) => {
+  console.log(val)
   emit('update:modelValue', { ...props.modelValue, [field]: val })
 }
 </script>

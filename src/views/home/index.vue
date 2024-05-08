@@ -11,85 +11,23 @@
       </div>
       <div class="rent-list">
         <el-row :gutter="20">
-          <el-col v-bind="colLayout">
+          <el-col
+            v-bind="colLayout"
+            v-for="(item, index) in zhengList"
+            :key="index"
+          >
             <div class="rent-item">
               <img src="../../assets/images/rent.png" alt="" />
-              <div class="title">富力湾 3房2厅 4000元/月</div>
-              <div class="address">顺安南路12号</div>
+              <div class="title">{{ item.title }}</div>
+              <div class="address">{{ item.address }}</div>
               <div class="price">
-                <span class="price-number">￥4000</span>
-                /月
-              </div>
-              <div class="collection">收藏</div>
-            </div>
-          </el-col>
-          <el-col v-bind="colLayout">
-            <div class="rent-item">
-              <img src="../../assets/images/rent.png" alt="" />
-              <div class="title">富力湾 3房2厅 4000元/月</div>
-              <div class="address">顺安南路12号</div>
-              <div class="price">
-                <span class="price-number">￥4000</span>
-                /月
-              </div>
-              <div class="collection">收藏</div>
-            </div>
-          </el-col>
-          <el-col v-bind="colLayout">
-            <div class="rent-item">
-              <img src="../../assets/images/rent.png" alt="" />
-              <div class="title">富力湾 3房2厅 4000元/月</div>
-              <div class="address">顺安南路12号</div>
-              <div class="price">
-                <span class="price-number">￥4000</span>
-                /月
-              </div>
-              <div class="collection">收藏</div>
-            </div>
-          </el-col>
-          <el-col v-bind="colLayout">
-            <div class="rent-item">
-              <img src="../../assets/images/rent.png" alt="" />
-              <div class="title">富力湾 3房2厅 4000元/月</div>
-              <div class="address">顺安南路12号</div>
-              <div class="price">
-                <span class="price-number">￥4000</span>
+                <span class="price-number">￥{{ item.price }}</span>
                 /月
               </div>
               <div class="collection">收藏</div>
             </div>
           </el-col>
         </el-row>
-        <!-- <div class="rent-item">
-          <img src="../../assets/images/rent.png" alt="" />
-          <div class="title">富力湾 3房2厅 4000元/月</div>
-          <div class="address">顺安南路12号</div>
-          <div class="price">
-            <span class="price-number">￥4000</span>
-            /月
-          </div>
-          <div class="collection">收藏</div>
-        </div>
-        <div class="rent-item" @click="goDetail">
-          <img src="../../assets/images/rent.png" alt="" />
-          <div class="title">富力湾 3房2厅 4000元/月</div>
-          <div class="address">顺安南路12号</div>
-          <div class="price">
-            <span class="price-number">￥4000</span>
-            /月
-          </div>
-          <div class="collection">收藏</div>
-        </div>
-        <div class="rent-item">
-          <img src="../../assets/images/rent.png" alt="" />
-          <div class="title">富力湾 3房2厅 4000元/月</div>
-          <div class="address">顺安南路12号</div>
-          <div class="price">
-            <span class="price-number">￥4000</span>
-            /月
-          </div>
-          <div class="collection">收藏</div>
-        </div> -->
       </div>
       <div class="rent-intro">
         <h2>最新合租</h2>
@@ -97,85 +35,23 @@
       </div>
       <div class="rent-list">
         <el-row :gutter="20">
-          <el-col v-bind="colLayout">
+          <el-col
+            v-bind="colLayout"
+            v-for="(item, index) in heList"
+            :key="index"
+          >
             <div class="rent-item">
               <img src="../../assets/images/rent.png" alt="" />
-              <div class="title">富力湾 3房2厅 4000元/月</div>
-              <div class="address">顺安南路12号</div>
+              <div class="title">{{ item.title }}</div>
+              <div class="address">{{ item.address }}</div>
               <div class="price">
-                <span class="price-number">￥4000</span>
-                /月
-              </div>
-              <div class="collection">收藏</div>
-            </div>
-          </el-col>
-          <el-col v-bind="colLayout">
-            <div class="rent-item">
-              <img src="../../assets/images/rent.png" alt="" />
-              <div class="title">富力湾 3房2厅 4000元/月</div>
-              <div class="address">顺安南路12号</div>
-              <div class="price">
-                <span class="price-number">￥4000</span>
-                /月
-              </div>
-              <div class="collection">收藏</div>
-            </div>
-          </el-col>
-          <el-col v-bind="colLayout">
-            <div class="rent-item">
-              <img src="../../assets/images/rent.png" alt="" />
-              <div class="title">富力湾 3房2厅 4000元/月</div>
-              <div class="address">顺安南路12号</div>
-              <div class="price">
-                <span class="price-number">￥4000</span>
-                /月
-              </div>
-              <div class="collection">收藏</div>
-            </div>
-          </el-col>
-          <el-col v-bind="colLayout">
-            <div class="rent-item">
-              <img src="../../assets/images/rent.png" alt="" />
-              <div class="title">富力湾 3房2厅 4000元/月</div>
-              <div class="address">顺安南路12号</div>
-              <div class="price">
-                <span class="price-number">￥4000</span>
+                <span class="price-number">￥{{ item.price }}</span>
                 /月
               </div>
               <div class="collection">收藏</div>
             </div>
           </el-col>
         </el-row>
-        <!-- <div class="rent-item">
-          <img src="../../assets/images/rent.png" alt="" />
-          <div class="title">富力湾 3房2厅 4000元/月</div>
-          <div class="address">顺安南路12号</div>
-          <div class="price">
-            <span class="price-number">￥4000</span>
-            /月
-          </div>
-          <div class="collection">收藏</div>
-        </div>
-        <div class="rent-item" @click="goDetail">
-          <img src="../../assets/images/rent.png" alt="" />
-          <div class="title">富力湾 3房2厅 4000元/月</div>
-          <div class="address">顺安南路12号</div>
-          <div class="price">
-            <span class="price-number">￥4000</span>
-            /月
-          </div>
-          <div class="collection">收藏</div>
-        </div>
-        <div class="rent-item">
-          <img src="../../assets/images/rent.png" alt="" />
-          <div class="title">富力湾 3房2厅 4000元/月</div>
-          <div class="address">顺安南路12号</div>
-          <div class="price">
-            <span class="price-number">￥4000</span>
-            /月
-          </div>
-          <div class="collection">收藏</div>
-        </div> -->
       </div>
       <div class="detail">查看更多房源 -></div>
     </div>
@@ -183,7 +59,9 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { getCondoList } from '@/api/condo'
 const router = useRouter()
 const goDetail = () => {
   router.push('/condoDetail')
@@ -195,10 +73,28 @@ const colLayout = {
   sm: 24, // ≥768px
   xs: 24, // <768px
 }
+
+const zhengList = ref([])
+const heList = ref([])
+const getZhengzuList = async () => {
+  const res = await getCondoList({ rentType: 1, size: 6 })
+  zhengList.value = res.data.list
+  console.log(res)
+}
+
+const getHezuList = async () => {
+  const res = await getCondoList({ rentType: 2, size: 6 })
+  heList.value = res.data.list
+  console.log(res)
+}
+
+getZhengzuList()
+getHezuList()
 </script>
 
 <style lang="scss" scoped>
 .content {
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;

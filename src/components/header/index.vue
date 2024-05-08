@@ -38,27 +38,28 @@
               用户反馈
             </div>
           </router-link>
-          <router-link to="/condo-cms" v-if="isLogin">
+          <router-link to="/condo-cms" v-if="isLogin && isCondoCmsShow">
             <div
               class="nav-item"
               :style="{
                 color: route.name === 'condo-cms' ? '#1677ff' : '#000',
               }"
             >
-              我的房屋
+              <!-- {{ localStorage.getItem('roleId') ? '房屋管理' : '我的房屋' }} -->
+              房屋管理
             </div>
           </router-link>
-          <router-link to="/orders-cms" v-if="isLogin">
+          <router-link to="/orders-cms" v-if="isLogin && isOrdersCmsShow">
             <div
               class="nav-item"
               :style="{
                 color: route.name === 'orders-cms' ? '#1677ff' : '#000',
               }"
             >
-              我的订单
+              订单管理
             </div>
           </router-link>
-          <router-link to="/news-cms" v-if="isLogin">
+          <router-link to="/news-cms" v-if="isLogin && isNewsCmsShow">
             <div
               class="nav-item"
               :style="{ color: route.name === 'news-cms' ? '#1677ff' : '#000' }"
@@ -66,22 +67,38 @@
               新闻管理
             </div>
           </router-link>
-          <router-link to="/feedback-cms" v-if="isLogin">
+          <router-link to="/feedback-cms" v-if="isLogin && isFeedbackCmsShow">
             <div
               class="nav-item"
               :style="{
                 color: route.name === 'feedback-cms' ? '#1677ff' : '#000',
               }"
             >
-              反馈列表
+              反馈管理
             </div>
           </router-link>
-          <router-link to="/user-cms" v-if="isLogin">
+          <router-link to="/user-cms" v-if="isLogin && isUserCmsShow">
             <div
               class="nav-item"
               :style="{ color: route.name === 'user-cms' ? '#1677ff' : '#000' }"
             >
               用户管理
+            </div>
+          </router-link>
+          <router-link to="/role-cms" v-if="isLogin && isRoleCmsShow">
+            <div
+              class="nav-item"
+              :style="{ color: route.name === 'role-cms' ? '#1677ff' : '#000' }"
+            >
+              角色管理
+            </div>
+          </router-link>
+          <router-link to="/menu-cms" v-if="true || (isLogin && isMenuCmsShow)">
+            <div
+              class="nav-item"
+              :style="{ color: route.name === 'menu-cms' ? '#1677ff' : '#000' }"
+            >
+              权限管理
             </div>
           </router-link>
         </div>
@@ -96,12 +113,15 @@
             <el-dropdown trigger="click">
               <div>
                 <el-icon><User /></el-icon>
+                {{ userName }}
               </div>
               <template #dropdown>
                 <el-dropdown-menu>
                   <div>
                     <el-dropdown-item>收藏列表</el-dropdown-item>
-                    <el-dropdown-item>个人中心</el-dropdown-item>
+                    <el-dropdown-item @click="handleUserInfoBtnClick"
+                      >个人中心</el-dropdown-item
+                    >
                     <el-dropdown-item @click="logout"
                       >退出登录</el-dropdown-item
                     >
@@ -145,7 +165,7 @@
 
 <script setup>
 import { computed, ref, toRefs } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import MyForm from '@/components/form/index.vue'
 import { loginFormItems, registerFormItems } from './config.js'
 import { register, login } from '@/api/user.js'
@@ -154,7 +174,8 @@ import { ElMessage } from 'element-plus'
 const dialogTableVisible = ref(false)
 const dialogTitle = ref('')
 const route = useRoute()
-console.log(route)
+const router = useRouter()
+const userInfo = ref({})
 
 const curDialogType = ref('')
 const btnText = computed(() => {
@@ -195,25 +216,34 @@ const handleDialogBtnClick = async () => {
       password: loginFormData.value.password,
     })
     if (res.code === 1) {
-      const { roleId, token, userName, menus } = res.data
+      const { roleId, token, userName, menus, id } = res.data
+      console.log(res.data)
+      userInfo.value = res.data
       localStorage.setItem('token', token)
       localStorage.setItem('userName', userName)
       localStorage.setItem('menus', JSON.stringify(menus))
       localStorage.setItem('roleId', roleId)
+      localStorage.setItem('userId', id)
       ElMessage({
         message: `欢迎登录，${userName}`,
         type: 'success',
       })
       dialogTableVisible.value = false
+      location.reload()
     } else {
       ElMessage.error(res.msg)
     }
   } else {
+    console.log(registerFormData.value)
+    registerFormData.value.area = registerFormData.value.area.join('/')
     const res = await register({ ...registerFormData.value, status: '1' })
     if (res.code === 1) {
       ElMessage({
         message: '您已注册成功，欢迎登录~',
         type: 'success',
+      })
+      router.push({
+        path: '/',
       })
       // 跳到登录页面
       const { userName, password } = registerFormData.value
@@ -227,6 +257,9 @@ const handleDialogBtnClick = async () => {
 }
 
 const logout = () => {
+  router.push({
+    path: '/',
+  })
   localStorage.clear()
   ElMessage({
     message: '您已退出登录~',
@@ -236,6 +269,58 @@ const logout = () => {
     location.reload()
   }, 1000)
 }
+
+const isCondoCmsShow = computed(() => {
+  return JSON.parse(localStorage.getItem('menus'))?.find(
+    (item) => item === '/condo-cms'
+  )
+})
+
+const isOrdersCmsShow = computed(() => {
+  return JSON.parse(localStorage.getItem('menus'))?.find(
+    (item) => item === '/orders-cms'
+  )
+})
+
+const isNewsCmsShow = computed(() => {
+  return JSON.parse(localStorage.getItem('menus'))?.find(
+    (item) => item === '/news-cms'
+  )
+})
+
+const isFeedbackCmsShow = computed(() => {
+  return JSON.parse(localStorage.getItem('menus'))?.find(
+    (item) => item === '/feedback-cms'
+  )
+})
+
+const isUserCmsShow = computed(() => {
+  return JSON.parse(localStorage.getItem('menus'))?.find(
+    (item) => item === '/user-cms'
+  )
+})
+
+const isRoleCmsShow = computed(() => {
+  return JSON.parse(localStorage.getItem('menus'))?.find(
+    (item) => item === '/role-cms'
+  )
+})
+
+const isMenuCmsShow = computed(() => {
+  return JSON.parse(localStorage.getItem('menus'))?.find(
+    (item) => item === '/menu-cms'
+  )
+})
+
+const handleUserInfoBtnClick = () => {
+  router.push({
+    path: '/user-info',
+  })
+}
+
+const userName = computed(() => {
+  return localStorage.getItem('userName') || ''
+})
 </script>
 
 <style lang="scss" scoped>

@@ -10,6 +10,11 @@ instance.interceptors.request.use(
   (config) => {
     // 在请求发送之前做些什么
     // 例如，添加认证信息、修改请求头等
+    // 请求头中携带token
+    const token = localStorage.getItem('token')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
     return config
   },
   (error) => {

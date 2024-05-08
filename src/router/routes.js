@@ -9,6 +9,9 @@ const OrdersCms = () => import('@/views/cms/orders/orders-cms.vue')
 const NewsCms = () => import('@/views/cms/news/news-cms.vue')
 const FeedbackCms = () => import('@/views/cms/feedback/feedback-cms.vue')
 const UserCms = () => import('@/views/cms/user/user-cms.vue')
+const UserInfo = () => import('@/views/cms/user/user-info.vue')
+const RoleCms = () => import('@/views/cms/role/role-cms.vue')
+const MenuCms = () => import('@/views/cms/menu/menu-cms.vue')
 
 export default [
   { path: '/', name: 'home', component: Home },
@@ -22,5 +25,9 @@ export default [
   { path: '/news-cms', name: 'news-cms', component: NewsCms },
   { path: '/feedback-cms', name: 'feedback-cms', component: FeedbackCms },
   { path: '/user-cms', name: 'user-cms', component: UserCms },
+  { path: '/user-info', name: 'user-info', component: UserInfo },
+  { path: '/role-cms', name: 'role-cms', component: RoleCms },
+  { path: '/menu-cms', name: 'menu-cms', component: MenuCms },
+
   // { path: '/:pathMatch(.*)*', component: NotFound } // 404 路由
 ]
