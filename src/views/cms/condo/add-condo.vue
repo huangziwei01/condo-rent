@@ -111,7 +111,8 @@ import {
   formItems4,
   formItems5,
 } from './config.js'
-
+const imgList = ref([])
+const imgUrls = ref([])
 const uploadUrl = computed(() => {
   return import.meta.env.MODE === 'development'
     ? 'http://localhost:8880/upload/condo_photo'
@@ -120,9 +121,16 @@ const uploadUrl = computed(() => {
 
 const handleSuccess = (response, file, fileList) => {
   console.log(response, file, fileList)
+  // imgList.value = response.photos
+  response.photos.forEach((item) => {
+    console.log(item)
+    imgUrls.value.push({
+      url: item,
+      uid: file.uid,
+    })
+  })
+  console.log(imgUrls.value)
 }
-
-console.log(uploadUrl)
 
 const formData1 = ref({})
 const formData2 = ref({})
@@ -151,7 +159,6 @@ formItems5.forEach((item) => {
   obj[item.field] = ''
 })
 
-const imgList = ref([])
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
 const handlePictureCardPreview = (uploadFile) => {
@@ -160,6 +167,10 @@ const handlePictureCardPreview = (uploadFile) => {
 }
 const handleRemove = (uploadFile, uploadFiles) => {
   console.log(uploadFile, uploadFiles)
+  imgUrls.value.findIndex((item) => item.uid === uploadFile.uid)
+  if (index !== -1) {
+    imgUrls.value.splice(index, 1)
+  }
 }
 </script>
 
