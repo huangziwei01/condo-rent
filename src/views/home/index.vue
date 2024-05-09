@@ -11,11 +11,7 @@
       </div>
       <div class="rent-list">
         <el-row :gutter="20">
-          <el-col
-            v-bind="colLayout"
-            v-for="(item, index) in zhengList"
-            :key="index"
-          >
+          <el-col v-bind="colLayout" v-for="(item, index) in zhengList" :key="index" @click="goDetail(item)">
             <div class="rent-item">
               <img src="../../assets/images/rent.png" alt="" />
               <div class="title">{{ item.title }}</div>
@@ -24,7 +20,8 @@
                 <span class="price-number">￥{{ item.price }}</span>
                 /月
               </div>
-              <div class="collection">收藏</div>
+              <div class="collection" @click="collectCondo(item)" v-if="+item.userId !== userId">收藏</div>
+              <div class="collection1" @click="unCollectCondo(item)" v-else>已收藏</div>
             </div>
           </el-col>
         </el-row>
@@ -35,11 +32,7 @@
       </div>
       <div class="rent-list">
         <el-row :gutter="20">
-          <el-col
-            v-bind="colLayout"
-            v-for="(item, index) in heList"
-            :key="index"
-          >
+          <el-col v-bind="colLayout" v-for="(item, index) in heList" :key="index" @click="goDetail(item)">
             <div class="rent-item">
               <img src="../../assets/images/rent.png" alt="" />
               <div class="title">{{ item.title }}</div>
@@ -48,12 +41,12 @@
                 <span class="price-number">￥{{ item.price }}</span>
                 /月
               </div>
-              <div class="collection">收藏</div>
+              <div class="collection" @click="collectCondo(item)">收藏</div>
             </div>
           </el-col>
         </el-row>
       </div>
-      <div class="detail">查看更多房源 -></div>
+      <div class="detail" @click="goSearch">查看更多房源 -></div>
     </div>
   </div>
 </template>
@@ -62,34 +55,55 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { getCondoList } from '@/api/condo'
+import { addCollect, deleteCollect, getCollectList } from '@/api/collect'
+import { ElMessage } from 'element-plus'
 const router = useRouter()
-const goDetail = () => {
-  router.push('/condoDetail')
+const goDetail = (item) => {
+  router.push(`/condoDetail/${item.id}`)
 }
 const colLayout = {
   xl: 6, // ≥1920px
   lg: 8, // ≥1200px
   md: 12, // ≥992px
   sm: 24, // ≥768px
-  xs: 24, // <768px
+  xs: 24 // <768px
 }
 
 const zhengList = ref([])
 const heList = ref([])
 const getZhengzuList = async () => {
-  const res = await getCondoList({ rentType: 1, size: 6 })
+  const res = await getCondoList({ rentType: 1, size: 6, rentStatus: 1 })
   zhengList.value = res.data.list
-  console.log(res)
 }
 
 const getHezuList = async () => {
-  const res = await getCondoList({ rentType: 2, size: 6 })
+  const res = await getCondoList({ rentType: 2, size: 6, rentStatus: 1 })
   heList.value = res.data.list
-  console.log(res)
 }
 
 getZhengzuList()
 getHezuList()
+
+const goSearch = () => {
+  router.push('/search')
+}
+const userId = ref(localStorage.getItem('userId'))
+const collectCondo = async (item) => {
+  const res = await addCollect({ userId: userId.value, condoId: item.id })
+  ElMessage({
+    message: '收藏成功',
+    type: 'success'
+  })
+}
+const unCollectCondo = async (item) => {
+  const res1 = await getCollectList({ userId: userId.value, condoId: item.id })
+  const target = res1.data.list[0]
+  const res2 = await deleteCollect(target.id)
+  ElMessage({
+    message: '取消收藏成功',
+    type: 'success'
+  })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -138,6 +152,7 @@ getHezuList()
     }
   }
   .rent-list {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -193,6 +208,20 @@ getHezuList()
         border-radius: 12px;
         background-color: #f1f1f3;
         font-size: 14px;
+      }
+      .collection1 {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        width: 60px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 12px;
+        background-color: #fff;
+        font-size: 14px;
+        color: #4860ff;
       }
     }
   }

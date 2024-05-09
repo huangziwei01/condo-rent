@@ -7,32 +7,19 @@
         </div>
       </template>
       <div class="rent-list">
-        <div class="rent-item">
+        <div class="rent-item" v-for="(item, index) in condoList" :key="index">
           <div class="left">
             <div class="title">
-              莱东地铁+太平山附近
-              <el-tag type="success" style="margin-left: 10px">租赁中</el-tag>
-              <!-- <el-tag type="success" style="margin-left: 10px">已预订</el-tag> -->
+              {{ item.title }}
+              <el-tag type="success" style="margin-left: 10px" v-if="+item.rentStatus === 2">已预订</el-tag>
+
+              <el-tag type="success" style="margin-left: 10px" v-if="+item.rentStatus === 3">租赁中</el-tag>
             </div>
-            <div class="address">香港岛，中国香港</div>
+            <div class="address">{{ item.address }}</div>
           </div>
           <div class="right">
-            <el-button type="primary" plain>查看详情</el-button>
-            <el-button type="warning" plain>申请退租</el-button>
-          </div>
-        </div>
-        <div class="rent-item">
-          <div class="left">
-            <div class="title">
-              高级住宅 济州最佳地段
-              <!-- <el-tag type="success" style="margin-left: 10px">租赁中</el-tag> -->
-              <el-tag type="success" style="margin-left: 10px">已预订</el-tag>
-            </div>
-            <div class="address">济州，济州特别自治道</div>
-          </div>
-          <div class="right">
-            <el-button type="primary" plain>查看详情</el-button>
-            <!-- <el-button type="warning" plain>申请退租</el-button> -->
+            <el-button type="primary" plain @click="goDetail(item)">查看详情</el-button>
+            <el-button type="warning" plain @click="returnRent(item)">申请退租</el-button>
           </div>
         </div>
       </div>
@@ -40,7 +27,36 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { getCondoList, updateCondo } from '@api/condo'
+import { ref } from 'vue'
+import { ElMessage } from 'element-plus'
+const condoList = ref([])
+const userId = ref(localStorage.getItem('userId'))
+const roleId = ref(localStorage.getItem('roleId'))
+const getList = async () => {
+  const res = null
+  // if (+roleId.value === 1) {
+  //   res = await getCondoList({ landlordId: userId.value })
+  // } else {
+  //   res = await getCondoList({ tenantsId: userId.value })
+  // }
+  res = await getCondoList({ tenantsId: userId.value })
+
+  condoList.value = res.data.list
+}
+getList()
+const goDetail = (item) => {
+  router.push(`/condoDetail/${item.id}`)
+}
+const returnRent = async (item) => {
+  const res = await updateCondo(item.id, { rentStatus: 4 })
+  ElMessage({
+    message: '退租申请已提交',
+    type: 'success'
+  })
+}
+</script>
 
 <style lang="scss" scoped>
 .container {

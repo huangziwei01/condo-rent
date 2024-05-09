@@ -23,10 +23,10 @@
 import { ref, onMounted } from 'vue'
 import MyForm from '@/components/form/index.vue'
 import { userInfoForm } from './config'
-import { getUserInfo } from '@/api/user'
+import { getUser } from '@/api/user'
 const userId = localStorage.getItem('userId')
 onMounted(async () => {
-  const res = await getUserInfo(userId)
+  const res = await getUser(userId)
   console.log(res)
 })
 const userInfoFormData = ref({})

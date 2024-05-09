@@ -16,7 +16,7 @@ const MenuCms = () => import('@/views/cms/menu/menu-cms.vue')
 export default [
   { path: '/', name: 'home', component: Home },
   { path: '/search', name: 'search', component: Search },
-  { path: '/condo-detail', name: 'condoDetail', component: CondoDetail },
+  { path: '/condo-detail/:id', name: 'condoDetail', component: CondoDetail },
   { path: '/news', name: 'news', component: News },
   { path: '/feedback', name: 'feedback', component: Feedback },
   { path: '/condo-cms', name: 'condo-cms', component: CondoCms },
@@ -27,7 +27,7 @@ export default [
   { path: '/user-cms', name: 'user-cms', component: UserCms },
   { path: '/user-info', name: 'user-info', component: UserInfo },
   { path: '/role-cms', name: 'role-cms', component: RoleCms },
-  { path: '/menu-cms', name: 'menu-cms', component: MenuCms },
+  { path: '/menu-cms', name: 'menu-cms', component: MenuCms }
 
   // { path: '/:pathMatch(.*)*', component: NotFound } // 404 路由
 ]

@@ -8,91 +8,25 @@
         </div>
       </template>
       <div class="rent-list">
-        <div class="rent-item">
+        <div class="rent-item" v-for="(item, index) in condoList" :key="index">
           <div class="left">
             <div class="title">
-              莱东地铁+太平山附近
-              <el-tag type="success" style="margin-left: 10px">已租出</el-tag>
-              <!-- <el-tag type="success" style="margin-left: 10px">被预订</el-tag> -->
-              <!-- <el-tag type="warning" style="margin-left: 10px"
-                >租客申请退租</el-tag
-              >
-              <el-tag type="info" style="margin-left: 10px">未租出</el-tag> -->
+              {{ item.title }}
+              <el-tag type="success" style="margin-left: 10px" v-if="+item.rentStatus === 3">已租出</el-tag>
+              <el-tag type="success" style="margin-left: 10px" v-if="+item.rentStatus === 2">被预订</el-tag>
+              <el-tag type="warning" style="margin-left: 10px" v-if="+item.rentStatus === 4">租客申请退租</el-tag>
+              <el-tag type="info" style="margin-left: 10px" v-if="+item.rentStatus === 1">未租出</el-tag>
             </div>
-            <div class="address">香港岛，中国香港</div>
+            <div class="address">{{ item.address }}</div>
           </div>
           <div class="right">
-            <!-- <el-button type="success" plain>确认租出</el-button> -->
-            <el-button type="primary" plain>查看详情</el-button>
-            <!-- <el-button type="primary" plain>修改详情</el-button>
-            <el-button type="warning" plain>同意退租</el-button>
-            <el-button type="danger" plain>删除房子</el-button> -->
-          </div>
-        </div>
-        <div class="rent-item">
-          <div class="left">
-            <div class="title">
-              高级住宅 济州最佳地段
-              <!-- <el-tag type="success" style="margin-left: 10px">已租出</el-tag> -->
-              <el-tag type="success" style="margin-left: 10px">被预订</el-tag>
-              <!-- <el-tag type="warning" style="margin-left: 10px"
-                >租客申请退租</el-tag
-              >
-              <el-tag type="info" style="margin-left: 10px">未租出</el-tag> -->
-            </div>
-            <div class="address">济州，济州特别自治道</div>
-          </div>
-          <div class="right">
-            <el-button type="primary" plain>查看详情</el-button>
-            <el-button type="success" plain>确认租出</el-button>
-            <!-- <el-button type="primary" plain>修改详情</el-button>
-            <el-button type="warning" plain>同意退租</el-button>
-            <el-button type="danger" plain>删除房子</el-button> -->
-          </div>
-        </div>
-        <div class="rent-item">
-          <div class="left">
-            <div class="title">
-              富力湾 3房2厅
-              <!-- <el-tag type="success" style="margin-left: 10px">已租出</el-tag> -->
-              <!-- <el-tag type="success" style="margin-left: 10px">被预订</el-tag> -->
-              <el-tag type="warning" style="margin-left: 10px"
-                >租客申请退租</el-tag
-              >
-              <!-- <el-tag type="info" style="margin-left: 10px">未租出</el-tag> -->
-            </div>
-            <div class="address">顺安南路12号</div>
-          </div>
-          <div class="right">
-            <!-- <el-button type="success" plain>确认租出</el-button> -->
-            <el-button type="primary" plain>查看详情</el-button>
-            <!-- <el-button type="primary" plain>修改详情</el-button>
-            <el-button type="warning" plain>同意退租</el-button>
-            <el-button type="danger" plain>删除房子</el-button> -->
-            <el-button type="warning" plain>同意退租</el-button>
-          </div>
-        </div>
-        <div class="rent-item">
-          <div class="left">
-            <div class="title">
-              深圳市中心的宽敞单间公寓
-              <!-- <el-tag type="success" style="margin-left: 10px">已租出</el-tag> -->
-              <!-- <el-tag type="success" style="margin-left: 10px">被预订</el-tag> -->
-              <el-tag type="warning" style="margin-left: 10px"
-                >租客申请退租</el-tag
-              >
-              <!-- <el-tag type="info" style="margin-left: 10px">未租出</el-tag> -->
-            </div>
-            <div class="address">福田 深圳</div>
-          </div>
-          <div class="right">
-            <!-- <el-button type="success" plain>确认租出</el-button> -->
-            <el-button type="primary" plain>查看详情</el-button>
-            <el-button type="primary" plain>修改详情</el-button>
-            <!-- <el-button type="primary" plain>修改详情</el-button>
-            <el-button type="warning" plain>同意退租</el-button>
-            <el-button type="danger" plain>删除房子</el-button> -->
-            <el-button type="danger" plain>删除房子</el-button>
+            <el-button type="success" plain v-if="+item.rentStatus === 2" @click="confirmRent">确认租出</el-button>
+            <el-button type="primary" plain @click="goDetail">查看详情</el-button>
+            <el-button type="primary" plain v-if="+item.rentStatus === 3" @click="goEdit">修改详情</el-button>
+            <el-button type="warning" plain v-if="+item.rentStatus === 4" @click="confirmReturn">
+              同意退租
+            </el-button>
+            <el-button type="danger" plain @click="handleDelete">删除房子</el-button>
           </div>
         </div>
       </div>
@@ -102,8 +36,17 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { getCondoList, updateCondo } from '@api/condo'
+import { ref } from 'vue'
+import { ElMessage } from 'element-plus'
+const condoList = ref([])
+const userId = ref(localStorage.getItem('userId'))
 const router = useRouter()
-
+const getList = async () => {
+  const res = await getCondoList({ landlordId: userId.value })
+  condoList.value = res.data.list
+}
+getList()
 const handleAddBtnClick = () => {
   router.push('/add-condo')
 }
