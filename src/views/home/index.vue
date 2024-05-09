@@ -10,8 +10,13 @@
         <div class="intro-title">为您推荐最新的整租房源</div>
       </div>
       <div class="rent-list">
-        <el-row :gutter="20">
-          <el-col v-bind="colLayout" v-for="(item, index) in zhengList" :key="index" @click="goDetail(item)">
+        <el-row :gutter="20" style="width: 100%">
+          <el-col
+            v-bind="colLayout"
+            v-for="(item, index) in zhengList"
+            :key="index"
+            @click="goDetail(item)"
+          >
             <div class="rent-item">
               <img src="../../assets/images/rent.png" alt="" />
               <div class="title">{{ item.title }}</div>
@@ -20,8 +25,20 @@
                 <span class="price-number">￥{{ item.price }}</span>
                 /月
               </div>
-              <div class="collection" @click="collectCondo(item)" v-if="+item.userId !== userId">收藏</div>
-              <div class="collection1" @click="unCollectCondo(item)" v-else>已收藏</div>
+              <div
+                class="collection"
+                @click.stop="collectCondo(item)"
+                v-if="!isCollectShow(item)"
+              >
+                收藏
+              </div>
+              <div
+                class="collection1"
+                @click.stop="unCollectCondo(item)"
+                v-else
+              >
+                已收藏
+              </div>
             </div>
           </el-col>
         </el-row>
@@ -32,7 +49,12 @@
       </div>
       <div class="rent-list">
         <el-row :gutter="20">
-          <el-col v-bind="colLayout" v-for="(item, index) in heList" :key="index" @click="goDetail(item)">
+          <el-col
+            v-bind="colLayout"
+            v-for="(item, index) in heList"
+            :key="index"
+            @click="goDetail(item)"
+          >
             <div class="rent-item">
               <img src="../../assets/images/rent.png" alt="" />
               <div class="title">{{ item.title }}</div>
@@ -52,11 +74,25 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { getCondoList } from '@/api/condo'
 import { addCollect, deleteCollect, getCollectList } from '@/api/collect'
 import { ElMessage } from 'element-plus'
+const isCollectShow = computed(() => {
+  return async function (item) {
+    const res = await getCollectList({
+      userId: String(userId.value),
+      condoId: String(item.id),
+    })
+    console.log(res)
+    if (res.code === 1) {
+      return true
+    } else {
+      return false
+    }
+  }
+})
 const router = useRouter()
 const goDetail = (item) => {
   router.push(`/condoDetail/${item.id}`)
@@ -66,7 +102,7 @@ const colLayout = {
   lg: 8, // ≥1200px
   md: 12, // ≥992px
   sm: 24, // ≥768px
-  xs: 24 // <768px
+  xs: 24, // <768px
 }
 
 const zhengList = ref([])
@@ -89,11 +125,18 @@ const goSearch = () => {
 }
 const userId = ref(localStorage.getItem('userId'))
 const collectCondo = async (item) => {
-  const res = await addCollect({ userId: userId.value, condoId: item.id })
-  ElMessage({
-    message: '收藏成功',
-    type: 'success'
+  const res = await addCollect({
+    userId: String(userId.value),
+    condoId: String(item.id),
   })
+  if (res.code === 1) {
+    getHezuList()
+    getZhengzuList()
+    ElMessage({
+      message: '收藏成功',
+      type: 'success',
+    })
+  }
 }
 const unCollectCondo = async (item) => {
   const res1 = await getCollectList({ userId: userId.value, condoId: item.id })
@@ -101,7 +144,7 @@ const unCollectCondo = async (item) => {
   const res2 = await deleteCollect(target.id)
   ElMessage({
     message: '取消收藏成功',
-    type: 'success'
+    type: 'success',
   })
 }
 </script>
@@ -219,9 +262,11 @@ const unCollectCondo = async (item) => {
         justify-content: center;
         align-items: center;
         border-radius: 12px;
-        background-color: #fff;
+        /* background-color: #fff; */
+        background-color: #f1f1f3;
+
         font-size: 14px;
-        color: #4860ff;
+        color: orange;
       }
     }
   }
