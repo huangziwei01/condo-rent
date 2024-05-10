@@ -6,8 +6,8 @@ export function addCollect(data) {
 }
 
 // 删除
-export function deleteCollect(id) {
-  return request.delete(`/collect/${id}`)
+export function deleteCollect(data) {
+  return request.delete(`/collect`, data)
 }
 
 // 获取详情

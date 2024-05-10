@@ -12,62 +12,23 @@
           <div class="left">
             <div class="title">
               {{ item.title }}
-              <el-tag
-                type="success"
-                style="margin-left: 10px"
-                v-if="+item.rentStatus === 3"
-                >已租出</el-tag
-              >
-              <el-tag
-                type="success"
-                style="margin-left: 10px"
-                v-if="+item.rentStatus === 2"
-                >被预订</el-tag
-              >
-              <el-tag
-                type="warning"
-                style="margin-left: 10px"
-                v-if="+item.rentStatus === 4"
-                >租客申请退租</el-tag
-              >
-              <el-tag
-                type="info"
-                style="margin-left: 10px"
-                v-if="+item.rentStatus === 1"
-                >未租出</el-tag
-              >
+              <el-tag type="success" style="margin-left: 10px" v-if="+item.rentStatus === 3">已租出</el-tag>
+              <el-tag type="success" style="margin-left: 10px" v-if="+item.rentStatus === 2">被预订</el-tag>
+              <el-tag type="warning" style="margin-left: 10px" v-if="+item.rentStatus === 4">租客申请退租</el-tag>
+              <el-tag type="info" style="margin-left: 10px" v-if="+item.rentStatus === 1">未租出</el-tag>
             </div>
             <div class="address">{{ item.address }}</div>
           </div>
           <div class="right">
-            <el-button
-              type="success"
-              plain
-              v-if="+item.rentStatus === 2"
-              @click="confirmRent(item)"
-              >确认租出</el-button
-            >
-            <el-button type="primary" plain @click="goDetail"
-              >查看详情</el-button
-            >
-            <el-button
-              type="primary"
-              plain
-              v-if="+item.rentStatus === 3"
-              @click="goEdit"
-              >修改详情</el-button
-            >
-            <el-button
-              type="warning"
-              plain
-              v-if="+item.rentStatus === 4"
-              @click="confirmReturn"
-            >
+            <el-button type="success" plain v-if="+item.rentStatus === 2" @click="confirmRent(item)">
+              确认租出
+            </el-button>
+            <el-button type="primary" plain @click="goDetail">查看详情</el-button>
+            <el-button type="primary" plain v-if="+item.rentStatus === 3" @click="goEdit">修改详情</el-button>
+            <el-button type="warning" plain v-if="+item.rentStatus === 4" @click="confirmReturn(item)">
               同意退租
             </el-button>
-            <el-button type="danger" plain @click="handleDelete"
-              >删除房子</el-button
-            >
+            <el-button type="danger" plain @click="handleDelete">删除房子</el-button>
           </div>
         </div>
       </div>
@@ -93,6 +54,23 @@ const handleAddBtnClick = () => {
 }
 const confirmRent = async (item) => {
   const res = await updateCondo(item.id, { rentStatus: 3 })
+  if (res.code === 1) {
+    ElMessage.success('房子已成功出租')
+    getList()
+  }
+}
+const goDetail = () => {
+  router.push('/condo-detail')
+}
+const goEdit = () => {
+  router.push('/edit-condo')
+}
+const confirmReturn = async (item) => {
+  const res = await updateCondo(item.id, { rentStatus: 1 })
+  if (res.code === 1) {
+    ElMessage.success('已同意退租')
+    getList()
+  }
 }
 </script>
 

@@ -4,12 +4,7 @@
       <h1>睡在山海间，住在人情里</h1>
       <img src="../../assets/images/search-bg.jpeg" alt="" />
     </div>
-    <my-form
-      :formItems="formItems"
-      v-model="formData"
-      :labelWidth="'120px'"
-      class="my_form"
-    >
+    <my-form :formItems="formItems" v-model="formData" :labelWidth="'120px'" class="my_form">
       <!-- <template #header>
         <h3 class="form_title">请输入您要筛选的条件</h3>
       </template> -->
@@ -21,62 +16,18 @@
       </template>
     </my-form>
     <div class="rent-list">
-      <el-row :gutter="30">
+      <el-row :gutter="30" style="width: 100%">
         <el-col v-bind="colLayout">
-          <div class="rent-item">
-            <img
-              src="https://z1.muscache.cn/pictures/5a06acbe-be45-4424-a574-08989aa1d58d.jpg?im_w=1200"
-              alt=""
-            />
-            <div class="title">高级住宅 济州最佳地段</div>
-            <div class="address">济州，济州特别自治道</div>
+          <div class="rent-item" v-for="(item, index) in condoList" :key="index">
+            <img :src="item.imgs[0]" alt="" />
+            <div class="title">{{ item.title }}</div>
+            <div class="address">{{ item.address }}</div>
             <div class="price">
-              <span class="price-number">￥14000</span>
+              <span class="price-number">￥{{ item.price }}</span>
               /月
             </div>
-            <div class="collection">收藏</div>
-          </div>
-        </el-col>
-        <el-col v-bind="colLayout">
-          <div class="rent-item">
-            <img
-              src="https://z1.muscache.cn/pictures/miso/Hosting-884516755093685510/original/2f5042f3-9e55-4082-a238-14614c54a8ff.jpeg?im_w=1200"
-              alt=""
-            />
-            <div class="title">莱东地铁+太平山附近</div>
-            <div class="address">香港岛，中国香港</div>
-            <div class="price">
-              <span class="price-number">￥24000</span>
-              /月
-            </div>
-            <div class="collection">收藏</div>
-          </div>
-        </el-col>
-        <el-col v-bind="colLayout">
-          <div class="rent-item">
-            <img
-              src="https://z1.muscache.cn/pictures/miso/Hosting-936612660899155876/original/688dfffe-9c4c-4cf8-b7d2-cdde3fe64dd3.jpeg?im_w=1200"
-              alt=""
-            />
-            <div class="title">深圳市中心的宽敞单间公寓</div>
-            <div class="address">福田 深圳</div>
-            <div class="price">
-              <span class="price-number">￥10000</span>
-              /月
-            </div>
-            <div class="collection">收藏</div>
-          </div>
-        </el-col>
-        <el-col v-bind="colLayout">
-          <div class="rent-item">
-            <img src="../../assets/images/rent.png" alt="" />
-            <div class="title">富力湾 3房2厅 4000元/月</div>
-            <div class="address">顺安南路12号</div>
-            <div class="price">
-              <span class="price-number">￥4000</span>
-              /月
-            </div>
-            <div class="collection">收藏</div>
+            <div class="collection" @click.stop="collectCondo(item)" v-if="!isCollectShow(item)">收藏</div>
+            <div class="collection1" @click.stop="unCollectCondo(item)" v-else>已收藏</div>
           </div>
         </el-col>
       </el-row>
@@ -88,10 +39,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import MyForm from '@/components/form/index.vue'
-import { formItems } from './config.js'
+import { getCondoList } from '@/api/condo'
+import { addCollect, deleteCollect, getCollectList } from '@/api/collect'
+import { ElMessage } from 'element-plus'
 
+import { formItems } from './config.js'
+const condoList = ref([])
+const getList = async () => {
+  const res = await getCondoList({ size: 12, rentStatus: 1 })
+  if (res.code === 1) {
+    condoList.value = res.data.list
+  }
+}
+getList()
 const formData = ref({})
 formItems.forEach((item) => {
   const obj = formData.value
@@ -103,7 +65,54 @@ const colLayout = {
   lg: 8, // ≥1200px
   md: 12, // ≥992px
   sm: 24, // ≥768px
-  xs: 24, // <768px
+  xs: 24 // <768px
+}
+
+const isCollectShow = computed(() => {
+  return async function (item) {
+    const res = await getCollectList({
+      userId: String(userId.value),
+      condoId: String(item.id)
+    })
+    console.log(res)
+    if (res.code === 1) {
+      return true
+    } else {
+      return false
+    }
+  }
+})
+
+const collectCondo = async (item) => {
+  const res = await addCollect({
+    userId: String(userId.value),
+    condoId: String(item.id)
+  })
+  if (res.code === 1) {
+    getHezuList()
+    getZhengzuList()
+    ElMessage({
+      message: '收藏成功',
+      type: 'success'
+    })
+  }
+}
+const unCollectCondo = async (item) => {
+  // const res1 = await getCollectList({ userId: userId.value, condoId: item.id })
+  // const target = res1.data.list[0]
+  // const res2 = await deleteCollect(target.id)
+  const res = await deleteCollect({
+    userId: String(userId.value),
+    condoId: String(item.id)
+  })
+  if (res.code === 1) {
+    getHezuList()
+    getZhengzuList()
+    ElMessage({
+      message: '取消收藏成功',
+      type: 'success'
+    })
+  }
 }
 </script>
 

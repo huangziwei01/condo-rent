@@ -93,7 +93,7 @@
         </el-upload>
       </div>
     </el-card>
-    <div class="btn" @click="handleAddClick">发布</div>
+    <div class="btn">修改</div>
   </div>
 </template>
 
@@ -101,9 +101,6 @@
 import { ref, computed } from 'vue'
 import MyForm from '@/components/form/index.vue'
 import { formItems1, formItems2, formItems3, formItems4, formItems5 } from './config.js'
-import { addCondo } from '@/api/condo'
-import { useRouter } from 'vue-router'
-const router = useRouter()
 const imgList = ref([])
 const imgUrls = ref([])
 const uploadUrl = computed(() => {
@@ -112,6 +109,7 @@ const uploadUrl = computed(() => {
 
 const handleSuccess = (response, file, fileList) => {
   console.log(response, file, fileList)
+  // imgList.value = response.photos
   response.photos.forEach((item) => {
     console.log(item)
     imgUrls.value.push({
@@ -160,21 +158,6 @@ const handleRemove = (uploadFile, uploadFiles) => {
   imgUrls.value.findIndex((item) => item.uid === uploadFile.uid)
   if (index !== -1) {
     imgUrls.value.splice(index, 1)
-  }
-}
-const handleAddClick = async () => {
-  const body = {
-    ...formData1.value,
-    ...formData2.value,
-    ...formData3.value,
-    ...formData4.value,
-    ...formData5.value,
-    photos: imgUrls.value.map((item) => item.url)
-  }
-  const res = await addCondo(body)
-  if (res.code === 1) {
-    ElMessage.success('发布成功')
-    router.push('/condo-cms')
   }
 }
 </script>
